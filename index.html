@@ -1,0 +1,6577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>E-FAPERTA | Faperta Unmus</title>
+<!-- GitHub Pages frontend; backend tetap Google Apps Script -->
+
+<style>
+
+:root{
+  --primary:#0b6339;
+  --primary-dark:#064326;
+  --primary-light:#eaf7ef;
+  --gold:#d6a72c;
+
+  --bg:#f5f7f8;
+  --white:#ffffff;
+
+  --text:#1f2937;
+  --muted:#6b7280;
+
+  --border:#e5e7eb;
+
+  --success:#15803d;
+  --warning:#d97706;
+  --danger:#dc2626;
+
+  --shadow:0 10px 30px rgba(0,0,0,.06);
+
+  --radius:18px;
+}
+
+
+*{
+  box-sizing:border-box;
+}
+
+
+html{
+  scroll-behavior:smooth;
+}
+
+
+body{
+  margin:0;
+  font-family:
+    Inter,
+    Segoe UI,
+    Arial,
+    sans-serif;
+
+  background:var(--bg);
+  color:var(--text);
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+
+  position:fixed;
+
+  left:0;
+  top:0;
+
+  width:250px;
+  height:100vh;
+
+  background:
+    linear-gradient(
+      180deg,
+      #0b6339,
+      #063b25
+    );
+
+  color:white;
+
+  z-index:1000;
+
+  padding:20px 15px;
+
+  transition:.3s;
+}
+
+
+.brand{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  padding:10px;
+
+  margin-bottom:25px;
+
+}
+
+
+.brand-icon{
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  overflow:hidden;
+  background:transparan;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.brand-icon img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.brand-title{
+
+  font-size:15px;
+
+  font-weight:800;
+
+}
+
+
+.brand-subtitle{
+
+  font-size:10px;
+
+  opacity:.65;
+
+  margin-top:3px;
+
+}
+
+
+.menu-title{
+
+  font-size:10px;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.5px;
+
+  opacity:.5;
+
+  padding:0 12px;
+
+  margin:20px 0 8px;
+
+}
+
+
+.menu-btn{
+
+  width:100%;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  border:0;
+
+  background:transparent;
+
+  color:rgba(255,255,255,.75);
+
+  padding:13px 14px;
+
+  border-radius:12px;
+
+  cursor:pointer;
+
+  text-align:left;
+
+  font-size:13px;
+
+  margin-bottom:4px;
+
+  transition:.2s;
+
+}
+
+
+.menu-btn:hover,
+.menu-btn.active{
+
+  background:
+    rgba(255,255,255,.13);
+
+  color:white;
+
+}
+
+
+.menu-icon{
+
+  width:24px;
+
+  text-align:center;
+
+  font-size:16px;
+
+}
+
+
+.sidebar-footer{
+
+  position:absolute;
+
+  bottom:20px;
+
+  left:20px;
+  right:20px;
+
+  padding-top:15px;
+
+  border-top:
+    1px solid rgba(255,255,255,.12);
+
+  font-size:10px;
+
+  opacity:.55;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+
+  margin-left:250px;
+
+  min-height:100vh;
+
+}
+
+
+.topbar{
+
+  height:72px;
+
+  background:white;
+
+  border-bottom:
+    1px solid var(--border);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:0 32px;
+
+  position:sticky;
+
+  top:0;
+
+  z-index:900;
+
+}
+
+
+.topbar-title{
+
+  font-size:18px;
+
+  font-weight:800;
+
+}
+
+
+.topbar-subtitle{
+
+  font-size:11px;
+
+  color:var(--muted);
+
+  margin-top:3px;
+
+}
+
+
+.menu-toggle{
+
+  display:none;
+
+  border:0;
+
+  background:var(--primary-light);
+
+  color:var(--primary);
+
+  width:42px;
+  height:42px;
+
+  border-radius:12px;
+
+  font-size:20px;
+
+}
+
+
+.content{
+
+  max-width:1450px;
+
+  margin:auto;
+
+  padding:28px;
+
+}
+
+
+.page{
+
+  display:none;
+
+}
+
+
+.page.active{
+
+  display:block;
+
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+  background:
+
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(255,255,255,.14),
+      transparent 25%
+    ),
+
+    linear-gradient(
+      135deg,
+      #0c673c,
+      #063b25
+    );
+
+  border-radius:24px;
+
+  padding:36px;
+
+  color:white;
+
+  position:relative;
+
+  overflow:hidden;
+
+  margin-bottom:25px;
+
+}
+
+
+.hero:after{
+
+  content:"";
+
+  position:absolute;
+
+  width:300px;
+  height:300px;
+
+  border:
+    1px solid rgba(255,255,255,.1);
+
+  border-radius:50%;
+
+  right:-100px;
+
+  bottom:-160px;
+
+}
+
+
+.hero small{
+
+  opacity:.7;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.5px;
+
+}
+
+
+.hero h1{
+
+  margin:9px 0;
+
+  font-size:31px;
+
+}
+
+
+.hero p{
+
+  max-width:700px;
+
+  line-height:1.7;
+
+  opacity:.82;
+
+  font-size:14px;
+
+}
+
+
+.hero-actions{
+
+  display:flex;
+
+  gap:10px;
+
+  flex-wrap:wrap;
+
+  margin-top:22px;
+
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.btn{
+
+  border:0;
+
+  border-radius:11px;
+
+  padding:12px 17px;
+
+  font-size:13px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+}
+
+
+.btn:hover{
+
+  transform:translateY(-1px);
+
+}
+
+
+.btn-primary{
+
+  background:var(--primary);
+
+  color:white;
+
+}
+
+
+.btn-primary:hover{
+
+  background:var(--primary-dark);
+
+}
+
+
+.btn-white{
+
+  background:white;
+
+  color:var(--primary);
+
+}
+
+
+.btn-light{
+
+  background:#eef2f0;
+
+  color:#374151;
+
+}
+
+
+.btn-danger{
+
+  background:#fee2e2;
+
+  color:#991b1b;
+
+}
+
+
+.btn-warning{
+
+  background:#fff7ed;
+
+  color:#9a3412;
+
+}
+
+
+.btn-success{
+
+  background:#dcfce7;
+
+  color:#166534;
+
+}
+
+
+/* =====================================================
+   TRACER DASHBOARD BERANDA - MODERN DIAGRAM
+===================================================== */
+.tracer-dashboard{margin-top:28px}
+.tracer-dashboard-shell{position:relative;overflow:hidden;border:1px solid rgba(15,107,63,.12);border-radius:24px;background:linear-gradient(145deg,#fff 0%,#f5fbf7 100%);box-shadow:0 18px 45px rgba(15,107,63,.10)}
+.tracer-dashboard-head{position:relative;padding:26px 28px;color:#fff;background:linear-gradient(135deg,#063d25 0%,#0f6b3f 55%,#2d9b63 100%)}
+.tracer-dashboard-head:after{content:'';position:absolute;width:220px;height:220px;right:-70px;top:-100px;border-radius:50%;background:rgba(255,255,255,.10)}
+.tracer-dashboard-head-content{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.tracer-dashboard-kicker{font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;opacity:.72}
+.tracer-dashboard-title{margin-top:4px;font-size:23px;font-weight:900;line-height:1.2}
+.tracer-dashboard-desc{margin-top:7px;max-width:650px;font-size:12px;line-height:1.6;opacity:.82}
+.tracer-dashboard-refresh{position:relative;z-index:2;flex-shrink:0;border:1px solid rgba(255,255,255,.25)!important;background:rgba(255,255,255,.12)!important;color:#fff!important;backdrop-filter:blur(10px)}
+.tracer-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px 22px 4px}
+.tracer-kpi{position:relative;min-height:112px;padding:18px;border:1px solid #e5eee8;border-radius:18px;background:#fff;overflow:hidden;box-shadow:0 8px 22px rgba(15,23,42,.05)}
+.tracer-kpi:before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#0f6b3f,#58c487)}
+.tracer-kpi-icon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#eff9f2;font-size:18px}
+.tracer-kpi-label{margin-top:12px;color:#6b7280;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.tracer-kpi-value{margin-top:3px;color:#0b5130;font-size:27px;line-height:1;font-weight:900}
+.tracer-kpi-note{margin-top:5px;color:#9ca3af;font-size:10px}
+.tracer-chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding:16px 22px 22px}
+.tracer-chart-card{min-width:0;border:1px solid #e6eee9;border-radius:20px;padding:20px;background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.045)}
+.tracer-chart-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}
+.tracer-chart-heading{display:flex;align-items:center;gap:10px}
+.tracer-chart-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:#eff9f2;font-size:16px}
+.tracer-chart-title{font-size:14px;font-weight:900;color:#17221c}
+.tracer-chart-subtitle{margin-top:3px;color:#8a948e;font-size:10px;line-height:1.45}
+.tracer-chart-total{flex-shrink:0;padding:5px 9px;border-radius:20px;background:#f1f8f3;color:#0f6b3f;font-size:10px;font-weight:900}
+.tracer-diagram{min-height:220px;position:relative}
+.tracer-svg{display:block;width:100%;height:auto;overflow:visible}
+.tracer-donut-layout{display:flex;align-items:center;justify-content:center;gap:24px;min-height:220px}
+.tracer-donut-wrap{position:relative;width:190px;min-width:190px;height:190px}
+.tracer-donut-svg{width:190px;height:190px;transform:rotate(-90deg)}
+.tracer-donut-hole{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;pointer-events:none}
+.tracer-donut-number{font-size:25px;font-weight:900;color:#0b5130}
+.tracer-donut-label{font-size:9px;color:#89948d;text-transform:uppercase;letter-spacing:.6px}
+.tracer-legend{display:flex;flex-direction:column;gap:9px;max-width:210px}
+.tracer-legend-row{display:grid;grid-template-columns:10px 1fr auto;gap:7px;align-items:center;font-size:10px}
+.tracer-legend-dot{width:9px;height:9px;border-radius:50%}
+.tracer-legend-name{color:#4a554e;font-weight:700;overflow-wrap:anywhere}
+.tracer-legend-value{color:#0f6b3f;font-weight:900}
+.tracer-hbar-list{display:flex;flex-direction:column;gap:12px;padding:4px 0}
+.tracer-hbar-row{display:grid;grid-template-columns:minmax(120px,1.1fr) 2.8fr 38px;gap:9px;align-items:center}
+.tracer-hbar-label{font-size:10px;font-weight:700;color:#3f4b44;overflow-wrap:anywhere}
+.tracer-hbar-track{height:12px;border-radius:20px;background:#eef3ef;overflow:hidden}
+.tracer-hbar-fill{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,#0f6b3f,#56c987);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.tracer-hbar-value{text-align:right;color:#0f6b3f;font-size:11px;font-weight:900}
+.tracer-column-wrap{height:230px;display:flex;align-items:stretch;gap:8px;padding:8px 4px 0}
+.tracer-column-y{display:flex;flex-direction:column;justify-content:space-between;padding:0 0 28px;color:#a0aaa4;font-size:8px}
+.tracer-column-plot{position:relative;flex:1;display:flex;align-items:flex-end;justify-content:space-around;gap:8px;border-bottom:1px solid #dfe8e2;background:repeating-linear-gradient(to bottom,transparent 0,transparent 45px,#edf2ee 46px)}
+.tracer-column-item{height:100%;flex:1;max-width:70px;display:flex;align-items:flex-end;justify-content:center;position:relative}
+.tracer-column-bar{width:min(42px,72%);height:0;border-radius:11px 11px 4px 4px;background:linear-gradient(180deg,#55c98a,#0f6b3f);transition:height .9s cubic-bezier(.2,.8,.2,1);position:relative;box-shadow:0 7px 14px rgba(15,23,42,.12);border:1px solid rgba(255,255,255,.75)}
+.tracer-column-value{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:900;color:#0f6b3f}
+.tracer-column-label{position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:800;color:#657169;white-space:nowrap}
+.tracer-empty{padding:28px 18px;text-align:center;color:#9ca3af;background:#f8faf9;border:1px dashed #dce7df;border-radius:14px;font-size:11px}
+.tracer-dashboard-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 22px 20px;color:#8a948e;font-size:10px}
+.tracer-live-dot{display:inline-block;width:7px;height:7px;margin-right:6px;border-radius:50%;background:#31a968;box-shadow:0 0 0 4px rgba(49,169,104,.12)}
+@media(max-width:1000px){.tracer-kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.tracer-chart-grid{grid-template-columns:1fr}.tracer-dashboard-head-content{align-items:flex-start;flex-direction:column}.tracer-dashboard-refresh{width:100%}}
+@media(max-width:600px){.tracer-donut-layout{flex-direction:column;gap:12px}.tracer-legend{width:100%;max-width:none}.tracer-donut-wrap{width:165px;min-width:165px;height:165px}.tracer-donut-svg{width:165px;height:165px}.tracer-column-wrap{height:210px}.tracer-hbar-row{grid-template-columns:90px 1fr 30px}}
+@media(max-width:500px){.tracer-dashboard-head{padding:22px 18px}.tracer-dashboard-title{font-size:20px}.tracer-kpi-grid{grid-template-columns:1fr;padding:16px 14px 2px}.tracer-chart-grid{padding:14px}.tracer-chart-card{padding:16px}.tracer-dashboard-footer{padding:0 14px 16px}}
+
+
+/* =====================================================
+   TRACER - KESESUAIAN BIDANG PEKERJAAN COLORFUL
+===================================================== */
+.tracer-suitability-wrap{display:flex;flex-direction:column;gap:16px;min-height:220px}
+.tracer-suitability-summary{display:flex;align-items:center;gap:16px;padding:14px 16px;border-radius:18px;background:linear-gradient(135deg,#f8fbff,#f7fbf8);border:1px solid #e8eef0}
+.tracer-suitability-ring{width:76px;height:76px;min-width:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:conic-gradient(#16a34a 0 42%,#2563eb 42% 74%,#f59e0b 74% 90%,#ef4444 90% 100%);box-shadow:0 8px 18px rgba(15,23,42,.10)}
+.tracer-suitability-ring-inner{width:58px;height:58px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;box-shadow:inset 0 0 0 1px #edf2f4}
+.tracer-suitability-ring-inner strong{font-size:17px;font-weight:900;color:#17221c;line-height:1}
+.tracer-suitability-ring-inner span{font-size:7px;color:#8b9690;margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+.tracer-suitability-summary-text{min-width:0}
+.tracer-suitability-kicker{font-size:9px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#718078}
+.tracer-suitability-headline{margin-top:3px;font-size:12px;font-weight:900;color:#17221c;line-height:1.35}
+.tracer-suitability-note{margin-top:4px;font-size:9px;color:#8b9690;line-height:1.4}
+.tracer-suitability-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tracer-suitability-item{padding:12px;border-radius:15px;background:var(--s-soft);border:1px solid color-mix(in srgb,var(--s-color) 18%,#fff);box-shadow:0 5px 14px rgba(15,23,42,.045)}
+.tracer-suitability-item-top{display:flex;align-items:center;gap:8px}
+.tracer-suitability-icon{width:27px;height:27px;min-width:27px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--s-color);color:#fff;font-size:12px;font-weight:900;box-shadow:0 5px 10px color-mix(in srgb,var(--s-color) 25%,transparent)}
+.tracer-suitability-name{flex:1;font-size:10px;font-weight:900;color:#334039;overflow-wrap:anywhere}
+.tracer-suitability-number{font-size:17px;font-weight:900;color:var(--s-color)}
+.tracer-suitability-track{height:8px;margin-top:10px;border-radius:20px;background:rgba(255,255,255,.72);overflow:hidden}
+.tracer-suitability-fill{height:100%;width:0;border-radius:20px;transition:width .9s cubic-bezier(.2,.8,.2,1);box-shadow:0 2px 7px rgba(15,23,42,.10)}
+.tracer-suitability-meta{display:flex;justify-content:space-between;gap:8px;margin-top:6px;font-size:8px;color:#7c8781}
+@media(max-width:600px){.tracer-suitability-cards{grid-template-columns:1fr}.tracer-suitability-summary{align-items:flex-start}.tracer-suitability-ring{width:68px;height:68px;min-width:68px}.tracer-suitability-ring-inner{width:52px;height:52px}}
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:16px;
+
+  margin-bottom:25px;
+
+}
+
+
+.stat-card{
+
+  background:white;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:16px;
+
+  padding:20px;
+
+  box-shadow:var(--shadow);
+
+}
+
+
+.stat-icon{
+
+  width:40px;
+  height:40px;
+
+  border-radius:11px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:var(--primary-light);
+
+  color:var(--primary);
+
+  font-size:18px;
+
+  margin-bottom:14px;
+
+}
+
+
+.stat-label{
+
+  color:var(--muted);
+
+  font-size:12px;
+
+}
+
+
+.stat-value{
+
+  font-size:24px;
+
+  font-weight:800;
+
+  margin-top:5px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card{
+
+  background:white;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:var(--radius);
+
+  padding:24px;
+
+  margin-bottom:20px;
+
+  box-shadow:var(--shadow);
+
+}
+
+
+.card-header{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+  margin-bottom:22px;
+
+}
+
+
+.card-title{
+
+  font-size:18px;
+
+  font-weight:800;
+
+}
+
+
+.card-subtitle{
+
+  font-size:12px;
+
+  color:var(--muted);
+
+  margin-top:4px;
+
+}
+
+
+
+/* =====================================================
+   MODERN ADMIN LOGIN
+===================================================== */
+.admin-login-modern{
+  position:relative;
+  overflow:hidden;
+  min-height:560px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:42px 24px;
+  border:0;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,.16), transparent 28%),
+    radial-gradient(circle at 90% 85%, rgba(214,167,44,.16), transparent 25%),
+    linear-gradient(135deg,#063b25 0%,#0b6339 48%,#087a49 100%);
+  box-shadow:0 22px 60px rgba(6,59,37,.18);
+}
+.admin-login-modern:before,
+.admin-login-modern:after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:50%;
+  pointer-events:none;
+}
+.admin-login-modern:before{width:360px;height:360px;right:-120px;top:-150px;}
+.admin-login-modern:after{width:260px;height:260px;left:-120px;bottom:-120px;}
+.admin-login-content{
+  width:min(100%,460px);
+  position:relative;
+  z-index:2;
+}
+.admin-login-brand{
+  text-align:center;
+  color:#fff;
+  margin-bottom:22px;
+}
+.admin-login-icon{
+  width:72px;height:72px;
+  margin:0 auto 14px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:22px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 14px 35px rgba(0,0,0,.15);
+  font-size:32px;
+  backdrop-filter:blur(12px);
+}
+.admin-login-brand h2{margin:0;font-size:27px;letter-spacing:-.5px;}
+.admin-login-brand p{margin:7px 0 0;color:rgba(255,255,255,.76);font-size:13px;}
+.admin-login-panel{
+  background:rgba(255,255,255,.97);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:24px;
+  padding:28px;
+  box-shadow:0 24px 55px rgba(0,0,0,.20);
+  backdrop-filter:blur(16px);
+}
+.admin-login-field{margin-bottom:17px;}
+.admin-login-field label{font-size:12px;color:#374151;margin-bottom:8px;}
+.admin-login-input-wrap{position:relative;}
+.admin-login-input{
+  height:50px !important;
+  padding:0 46px 0 44px !important;
+  border-radius:13px !important;
+  background:#f8faf9 !important;
+  border:1px solid #dce5df !important;
+  font-size:14px !important;
+  transition:.2s !important;
+}
+.admin-login-input:focus{
+  border-color:#0b6339 !important;
+  box-shadow:0 0 0 4px rgba(11,99,57,.10) !important;
+  background:#fff !important;
+}
+.admin-login-input-icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:#6b7280;font-size:17px;z-index:2;
+}
+.admin-login-toggle{
+  position:absolute;right:7px;top:7px;
+  width:36px;height:36px;padding:0 !important;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:10px !important;
+  background:transparent !important;
+  color:#6b7280 !important;
+  box-shadow:none !important;
+}
+.admin-login-toggle:hover{background:#eef5f0 !important;transform:none !important;}
+.admin-login-submit{
+  width:100%;height:50px;
+  border-radius:13px !important;
+  font-size:14px !important;
+  background:linear-gradient(135deg,#0b6339,#087a49) !important;
+  box-shadow:0 10px 22px rgba(11,99,57,.22);
+}
+.admin-login-submit:hover{box-shadow:0 14px 28px rgba(11,99,57,.28);transform:translateY(-2px) !important;}
+.admin-login-hint{
+  text-align:center;
+  margin:17px 0 0;
+  font-size:11px;
+  color:#9ca3af;
+}
+@media(max-width:600px){
+  .admin-login-modern{min-height:520px;padding:28px 15px;}
+  .admin-login-panel{padding:22px 18px;border-radius:20px;}
+  .admin-login-brand h2{font-size:23px;}
+}
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.section-title{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  margin:28px 0 16px;
+
+}
+
+
+.section-number{
+
+  width:34px;
+  height:34px;
+
+  background:var(--primary);
+
+  color:white;
+
+  border-radius:10px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-weight:800;
+
+  font-size:13px;
+
+}
+
+
+.section-title h3{
+
+  margin:0;
+
+  font-size:16px;
+
+}
+
+
+.section-title p{
+
+  margin:3px 0 0;
+
+  font-size:11px;
+
+  color:var(--muted);
+
+}
+
+
+.grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:16px;
+
+}
+
+
+.grid-3{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:16px;
+
+}
+
+
+.form-group{
+
+  margin-bottom:4px;
+
+}
+
+
+label{
+
+  display:block;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  margin-bottom:7px;
+
+}
+
+
+.required{
+
+  color:#dc2626;
+
+}
+
+
+input,
+select,
+textarea{
+
+  width:100%;
+
+  border:
+    1px solid #dce1df;
+
+  border-radius:10px;
+
+  background:#fbfcfc;
+
+  padding:12px 13px;
+
+  font-size:13px;
+
+  outline:none;
+
+  transition:.2s;
+
+  color:var(--text);
+
+}
+
+
+input:focus,
+select:focus,
+textarea:focus{
+
+  border-color:var(--primary);
+
+  background:white;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(15,107,63,.08);
+
+}
+
+
+textarea{
+
+  min-height:110px;
+
+  resize:vertical;
+
+}
+
+
+/* =====================================================
+   CALCULATION
+===================================================== */
+
+.calculation{
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff9f2,
+      #f8fcf9
+    );
+
+  border:
+    1px solid #d8ebdf;
+
+  border-radius:16px;
+
+  padding:18px;
+
+  margin-top:18px;
+
+}
+
+
+.calc-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:12px;
+
+}
+
+
+.calc-item{
+
+  background:white;
+
+  border-radius:12px;
+
+  padding:15px;
+
+  text-align:center;
+
+}
+
+
+.calc-label{
+
+  color:var(--muted);
+
+  font-size:11px;
+
+}
+
+
+.calc-value{
+
+  margin-top:6px;
+
+  color:var(--primary);
+
+  font-size:17px;
+
+  font-weight:800;
+
+}
+
+
+/* =====================================================
+   FILE
+===================================================== */
+
+.file-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:12px;
+
+}
+
+
+.file-item{
+
+  border:
+    1px dashed #cbd5d0;
+
+  border-radius:13px;
+
+  padding:15px;
+
+  background:#fafcfb;
+
+  transition:.2s;
+
+}
+
+
+.file-item:hover{
+
+  border-color:var(--primary);
+
+  background:#f7fcf9;
+
+}
+
+
+.file-label{
+
+  font-size:12px;
+
+  font-weight:700;
+
+  margin-bottom:9px;
+
+  line-height:1.5;
+
+}
+
+
+.file-number{
+
+  display:inline-flex;
+
+  width:24px;
+  height:24px;
+
+  border-radius:7px;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:var(--primary-light);
+
+  color:var(--primary);
+
+  margin-right:6px;
+
+}
+
+
+.file-input{
+
+  font-size:11px;
+
+  padding:7px;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.search-box{
+
+  display:flex;
+
+  gap:10px;
+
+  max-width:650px;
+
+}
+
+
+.search-box input{
+
+  flex:1;
+
+}
+
+
+/* STATUS CARD */
+
+.status-card{
+
+  background:white;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:22px;
+
+  box-shadow:var(--shadow);
+
+  overflow:hidden;
+
+  margin-top:20px;
+
+}
+
+
+/* FOTO + NAMA + NIM + STATUS */
+
+.status-profile{
+
+  background:
+    linear-gradient(
+      135deg,
+      #0b6339,
+      #063d25
+    );
+
+  color:white;
+
+  padding:32px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:26px;
+
+}
+
+
+.photo-wrap{
+
+  flex-shrink:0;
+
+}
+
+
+.student-photo,
+.photo-placeholder{
+
+  width:145px;
+  height:180px;
+
+  object-fit:cover;
+
+  border-radius:16px;
+
+  border:
+    4px solid
+    rgba(255,255,255,.85);
+
+  background:white;
+
+}
+
+
+.photo-placeholder{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+
+  color:#6b7280;
+
+  font-size:11px;
+
+}
+
+
+.profile-info{
+
+  flex:1;
+
+}
+
+
+.profile-name{
+
+  font-size:28px;
+
+  font-weight:800;
+
+  line-height:1.2;
+
+  margin-bottom:8px;
+
+}
+
+
+.profile-nim{
+
+  font-size:14px;
+
+  opacity:.88;
+
+  margin-bottom:5px;
+
+}
+
+
+.profile-prodi{
+
+  font-size:13px;
+
+  opacity:.72;
+
+  margin-bottom:16px;
+
+}
+
+
+.status-badge{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  padding:8px 16px;
+
+  border-radius:30px;
+
+  font-size:12px;
+
+  font-weight:800;
+
+}
+
+
+/* STATUS COLORS */
+
+.badge-diajukan{
+
+  background:#fef3c7;
+
+  color:#92400e;
+
+}
+
+
+.badge-diverifikasi{
+
+  background:#dcfce7;
+
+  color:#166534;
+
+}
+
+
+.badge-perbaikan{
+
+  background:#ffedd5;
+
+  color:#9a3412;
+
+}
+
+
+.badge-ditolak{
+
+  background:#fee2e2;
+
+  color:#991b1b;
+
+}
+
+
+/* STATUS BODY */
+
+.status-body{
+
+  padding:28px;
+
+}
+
+
+/* ACADEMIC */
+
+.result-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:14px;
+
+  margin-bottom:28px;
+
+}
+
+
+.result-box{
+
+  background:#f7f9f8;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:14px;
+
+  padding:18px;
+
+  text-align:center;
+
+}
+
+
+.result-box span{
+
+  display:block;
+
+  font-size:11px;
+
+  color:var(--muted);
+
+}
+
+
+.result-box strong{
+
+  display:block;
+
+  color:var(--primary);
+
+  font-size:20px;
+
+  margin-top:7px;
+
+}
+
+
+/* DETAIL */
+
+.detail-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:0 30px;
+
+}
+
+
+.detail-row{
+
+  padding:12px 0;
+
+  border-bottom:
+    1px solid #edf0ee;
+
+}
+
+
+.detail-label{
+
+  color:var(--muted);
+
+  font-size:11px;
+
+  margin-bottom:4px;
+
+}
+
+
+.detail-value{
+
+  font-size:13px;
+
+  font-weight:600;
+
+  line-height:1.5;
+
+}
+
+
+/* =====================================================
+   DOWNLOAD
+===================================================== */
+
+.download-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:15px;
+
+}
+
+
+.download-card{
+
+  border:
+    1px solid var(--border);
+
+  border-radius:15px;
+
+  padding:18px;
+
+  display:flex;
+
+  gap:15px;
+
+  align-items:flex-start;
+
+  transition:.2s;
+
+}
+
+
+.download-card:hover{
+
+  border-color:#b8d8c4;
+
+  transform:translateY(-2px);
+
+}
+
+
+.download-icon{
+
+  width:45px;
+  height:45px;
+
+  border-radius:12px;
+
+  background:var(--primary-light);
+
+  color:var(--primary);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  flex-shrink:0;
+
+  font-size:19px;
+
+}
+
+
+.download-title{
+
+  font-weight:800;
+
+  font-size:13px;
+
+}
+
+
+.download-desc{
+
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.5;
+
+  margin:5px 0 12px;
+
+}
+
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+.admin-toolbar{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:10px;
+
+  margin-bottom:18px;
+
+}
+
+
+.admin-user-box{background:#f8fbf9;border:1px solid #dbe9e0;border-radius:16px;padding:18px;margin-bottom:20px;}
+.admin-user-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.admin-user-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.admin-user-table{min-width:700px;}
+@media(max-width:800px){.admin-user-grid{grid-template-columns:1fr;}}
+
+.table-wrap{
+
+  overflow:auto;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:13px;
+
+}
+
+
+table{
+
+  width:100%;
+
+  border-collapse:collapse;
+
+  min-width:1150px;
+
+}
+
+
+th{
+
+  background:#f5f8f6;
+
+  color:#4b5563;
+
+  font-size:11px;
+
+  text-align:left;
+
+  padding:12px;
+
+  border-bottom:
+    1px solid var(--border);
+
+}
+
+
+td{
+
+  padding:12px;
+
+  font-size:11px;
+
+  border-bottom:
+    1px solid #eef0ef;
+
+  vertical-align:top;
+
+}
+
+
+.file-links a{
+
+  display:block;
+
+  color:var(--primary);
+
+  text-decoration:none;
+
+  margin-bottom:4px;
+
+}
+
+
+.file-links a:hover{
+
+  text-decoration:underline;
+
+}
+
+
+/* =====================================================
+   ALERT
+===================================================== */
+
+.alert{
+
+  padding:14px 16px;
+
+  border-radius:12px;
+
+  font-size:12px;
+
+  margin-bottom:18px;
+
+}
+
+
+.alert-info{
+
+  background:#eff6ff;
+
+  color:#1e40af;
+
+}
+
+
+.alert-warning{
+
+  background:#fff7ed;
+
+  color:#9a3412;
+
+}
+
+
+.alert-success{
+
+  background:#f0fdf4;
+
+  color:#166534;
+
+}
+
+
+.alert-danger{
+
+  background:#fef2f2;
+
+  color:#991b1b;
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal{
+
+  display:none;
+
+  position:fixed;
+
+  z-index:2000;
+
+  inset:0;
+
+  background:
+    rgba(0,0,0,.5);
+
+  padding:25px;
+
+}
+
+
+.modal-content{
+
+  max-width:500px;
+
+  margin:5% auto;
+
+  background:white;
+
+  border-radius:18px;
+
+  padding:25px;
+
+  box-shadow:
+    0 25px 70px
+    rgba(0,0,0,.2);
+
+}
+
+
+.modal-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:20px;
+
+}
+
+
+.modal-title{
+
+  font-weight:800;
+
+  font-size:18px;
+
+}
+
+
+.close{
+
+  border:0;
+
+  background:#f3f4f6;
+
+  width:35px;
+  height:35px;
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  font-size:20px;
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading{
+
+  display:none;
+
+  text-align:center;
+
+  padding:30px;
+
+  color:var(--muted);
+
+}
+
+
+.spinner{
+
+  display:inline-block;
+
+  width:30px;
+  height:30px;
+
+  border:
+    3px solid #dce5df;
+
+  border-top-color:
+    var(--primary);
+
+  border-radius:50%;
+
+  animation:
+    spin .8s linear infinite;
+
+}
+
+
+@keyframes spin{
+
+  to{
+    transform:rotate(360deg);
+  }
+
+}
+
+
+/* =====================================================
+   SUCCESS / ERROR
+===================================================== */
+
+.success-box{
+
+  background:#f0fdf4;
+
+  border:
+    1px solid #bbf7d0;
+
+  color:#166534;
+
+  border-radius:15px;
+
+  padding:20px;
+
+  margin-top:20px;
+
+}
+
+
+.error-box{
+
+  background:#fef2f2;
+
+  border:
+    1px solid #fecaca;
+
+  color:#991b1b;
+
+  border-radius:15px;
+
+  padding:20px;
+
+  margin-top:20px;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+
+  text-align:center;
+
+  padding:30px;
+
+  color:#9ca3af;
+
+  font-size:11px;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:1000px){
+
+  .stats{
+
+    grid-template-columns:
+      repeat(2,1fr);
+
+  }
+
+  .grid-3{
+
+    grid-template-columns:1fr;
+
+  }
+
+}
+
+
+@media(max-width:800px){
+
+  .sidebar{
+
+    transform:
+      translateX(-100%);
+
+  }
+
+
+  .sidebar.open{
+
+    transform:
+      translateX(0);
+
+  }
+
+
+  .main{
+
+    margin-left:0;
+
+  }
+
+
+  .menu-toggle{
+
+    display:block;
+
+  }
+
+
+  .topbar{
+
+    padding:0 18px;
+
+  }
+
+
+  .content{
+
+    padding:18px;
+
+  }
+
+
+  .grid,
+  .file-grid,
+  .download-grid,
+  .detail-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+
+  .calc-grid,
+  .result-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+
+  .status-profile{
+
+    flex-direction:column;
+
+    text-align:center;
+
+    padding:25px 18px;
+
+  }
+
+
+  .profile-name{
+
+    font-size:22px;
+
+  }
+
+
+  .hero{
+
+    padding:25px;
+
+  }
+
+
+  .hero h1{
+
+    font-size:24px;
+
+  }
+
+}
+
+
+@media(max-width:500px){
+
+  .stats{
+
+    grid-template-columns:1fr;
+
+  }
+
+
+  .search-box{
+
+    flex-direction:column;
+
+  }
+
+
+  .student-photo,
+  .photo-placeholder{
+
+    width:120px;
+
+    height:150px;
+
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+  class="sidebar"
+  id="sidebar">
+
+
+  <div class="brand">
+
+    <div class="brand-icon">
+    <img
+    src="https://i.ibb.co.com/bg256Zn1/logounyu1.png"
+    alt="Logo Faperta Unmus"
+    style="
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:12px;
+    ">
+    </div>
+
+
+    <div>
+
+      <div class="brand-title">
+        FAPERTA UNMUS
+      </div>
+
+      <div class="brand-subtitle">
+        Sistem Pendaftaran Yudisium
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="menu-title">
+    Menu Utama
+  </div>
+
+
+  <button
+    class="menu-btn active"
+    onclick="showPage('home',this)">
+
+    <span class="menu-icon">
+      ⌂
+    </span>
+
+    <span>
+      Beranda
+    </span>
+
+  </button>
+
+
+  <button
+    class="menu-btn"
+    onclick="showPage('registration',this)">
+
+    <span class="menu-icon">
+      📝
+    </span>
+
+    <span>
+      Pendaftaran Yudisium
+    </span>
+
+  </button>
+
+
+  <button
+    class="menu-btn"
+    onclick="showPage('download',this)">
+
+    <span class="menu-icon">
+      📁
+    </span>
+
+    <span>
+      Download Persyaratan
+    </span>
+
+  </button>
+
+
+  <button
+    class="menu-btn"
+    onclick="showPage('tracer',this)">
+
+    <span class="menu-icon">📊</span>
+
+    <span>
+      Tracer Study
+    </span>
+
+  </button>
+
+
+  <button
+    class="menu-btn"
+    onclick="showPage('status',this)">
+
+    <span class="menu-icon">
+      🔎
+    </span>
+
+    <span>
+      Cek Status
+    </span>
+
+  </button>
+
+
+  <div class="menu-title">
+    Sistem
+  </div>
+
+
+  <button
+    class="menu-btn"
+    onclick="showPage('admin',this)">
+
+    <span class="menu-icon">
+      ⚙
+    </span>
+
+    <span>
+      Admin
+    </span>
+
+  </button>
+
+
+  <div class="sidebar-footer">
+
+    Fakultas Pertanian<br>
+
+    Universitas Musamus
+
+  </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+<header class="topbar">
+
+
+  <div
+    style="
+      display:flex;
+      align-items:center;
+      gap:12px;
+    ">
+
+
+    <button
+      class="menu-toggle"
+      onclick="toggleSidebar()">
+
+      ☰
+
+    </button>
+
+
+    <div>
+
+      <div class="topbar-title">
+        E-FAPERTA
+      </div>
+
+      <div class="topbar-subtitle">
+        Fakultas Pertanian Universitas Musamus
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <div
+    style="
+      font-size:12px;
+      color:#6b7280;
+    ">
+
+    Pendaftaran Online
+
+  </div>
+
+
+</header>
+
+
+<div class="content">
+
+
+<!-- =====================================================
+     BERANDA
+===================================================== -->
+
+<section
+  id="home"
+  class="page active">
+
+
+  <div class="hero">
+
+    <small>
+      FAKULTAS PERTANIAN UNIVERSITAS MUSAMUS
+    </small>
+
+
+    <h1>
+      Sistem Pendaftaran Yudisium
+    </h1>
+
+
+    <p>
+
+      Lakukan pendaftaran yudisium secara
+      online dengan mudah, cepat, dan
+      terintegrasi. Lengkapi data mahasiswa
+      serta seluruh dokumen persyaratan
+      sebelum mengirimkan pendaftaran.
+
+    </p>
+
+
+    <div class="hero-actions">
+
+
+      <button
+        class="btn btn-white"
+        onclick="showPageById('registration')">
+
+        📝 Mulai Pendaftaran
+
+      </button>
+
+
+      <button
+        class="btn"
+        style="
+          background:rgba(255,255,255,.12);
+          color:white;
+        "
+        onclick="showPageById('status')">
+
+        🔎 Cek Status
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+  <div class="stats">
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        📝
+      </div>
+
+      <div class="stat-label">
+        Pendaftaran
+      </div>
+
+      <div class="stat-value">
+        Online
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        📂
+      </div>
+
+      <div class="stat-label">
+        Dokumen
+      </div>
+
+      <div class="stat-value">
+        Terintegrasi
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        🔎
+      </div>
+
+      <div class="stat-label">
+        Cek Status
+      </div>
+
+      <div class="stat-value">
+        Online
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-icon">
+        🔐
+      </div>
+
+      <div class="stat-label">
+        Verifikasi
+      </div>
+
+      <div class="stat-value">
+        Admin
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <!-- =====================================================
+       GRAFIK TRACER STUDY
+  ===================================================== -->
+
+  <div class="tracer-dashboard">
+    <div class="tracer-dashboard-shell">
+
+      <div class="tracer-dashboard-head">
+        <div class="tracer-dashboard-head-content">
+          <div>
+            <div class="tracer-dashboard-kicker">Dashboard Alumni</div>
+            <div class="tracer-dashboard-title">📊 Statistik Tracer Study</div>
+            <div class="tracer-dashboard-desc">
+              Ringkasan visual kondisi alumni berdasarkan data Tracer Study Fakultas Pertanian Universitas Musamus.
+            </div>
+          </div>
+          <button class="btn tracer-dashboard-refresh" type="button" onclick="loadTracerDashboard()">↻ Perbarui Data</button>
+        </div>
+      </div>
+
+      <div class="tracer-kpi-grid">
+        <div class="tracer-kpi">
+          <div class="tracer-kpi-icon">👥</div>
+          <div class="tracer-kpi-label">Total Responden</div>
+          <div class="tracer-kpi-value" id="tracerTotal">0</div>
+          <div class="tracer-kpi-note">Alumni terdata</div>
+        </div>
+        <div class="tracer-kpi">
+          <div class="tracer-kpi-icon">💼</div>
+          <div class="tracer-kpi-label">Status Pekerjaan</div>
+          <div class="tracer-kpi-value" id="tracerStatusCount">0</div>
+          <div class="tracer-kpi-note">Kategori terdata</div>
+        </div>
+        <div class="tracer-kpi">
+          <div class="tracer-kpi-icon">🎓</div>
+          <div class="tracer-kpi-label">Program Studi</div>
+          <div class="tracer-kpi-value" id="tracerProdiCount">0</div>
+          <div class="tracer-kpi-note">Prodi terwakili</div>
+        </div>
+        <div class="tracer-kpi">
+          <div class="tracer-kpi-icon">📅</div>
+          <div class="tracer-kpi-label">Tahun Lulus</div>
+          <div class="tracer-kpi-value" id="tracerTahunCount">0</div>
+          <div class="tracer-kpi-note">Tahun terdata</div>
+        </div>
+      </div>
+
+      <div class="tracer-chart-grid">
+
+        <div class="tracer-chart-card">
+          <div class="tracer-chart-top">
+            <div class="tracer-chart-heading">
+              <div class="tracer-chart-icon">💼</div>
+              <div>
+                <div class="tracer-chart-title">Status Pekerjaan Alumni</div>
+                <div class="tracer-chart-subtitle">Distribusi responden berdasarkan status saat ini.</div>
+              </div>
+            </div>
+            <div class="tracer-chart-total" id="tracerStatusTotal">0</div>
+          </div>
+          <div id="tracerStatusChart" class="tracer-diagram"><div class="tracer-empty">Memuat grafik...</div></div>
+        </div>
+
+        <div class="tracer-chart-card">
+          <div class="tracer-chart-top">
+            <div class="tracer-chart-heading">
+              <div class="tracer-chart-icon">🎓</div>
+              <div>
+                <div class="tracer-chart-title">Sebaran Program Studi</div>
+                <div class="tracer-chart-subtitle">Jumlah alumni yang mengisi berdasarkan program studi.</div>
+              </div>
+            </div>
+            <div class="tracer-chart-total" id="tracerProdiTotal">0</div>
+          </div>
+          <div id="tracerProdiChart" class="tracer-diagram"><div class="tracer-empty">Memuat grafik...</div></div>
+        </div>
+
+        <div class="tracer-chart-card">
+          <div class="tracer-chart-top">
+            <div class="tracer-chart-heading">
+              <div class="tracer-chart-icon">📅</div>
+              <div>
+                <div class="tracer-chart-title">Tahun Lulus</div>
+                <div class="tracer-chart-subtitle">Perbandingan jumlah responden per tahun kelulusan.</div>
+              </div>
+            </div>
+            <div class="tracer-chart-total" id="tracerTahunTotal">0</div>
+          </div>
+          <div id="tracerTahunChart" class="tracer-diagram"><div class="tracer-empty">Memuat grafik...</div></div>
+        </div>
+
+        <div class="tracer-chart-card">
+          <div class="tracer-chart-top">
+            <div class="tracer-chart-heading">
+              <div class="tracer-chart-icon">🎯</div>
+              <div>
+                <div class="tracer-chart-title">Kesesuaian Bidang Pekerjaan</div>
+                <div class="tracer-chart-subtitle">Ringkasan kesesuaian pekerjaan dengan bidang studi.</div>
+              </div>
+            </div>
+            <div class="tracer-chart-total" id="tracerKesesuaianTotal">0</div>
+          </div>
+          <div id="tracerKesesuaianChart" class="tracer-diagram"><div class="tracer-empty">Memuat grafik...</div></div>
+        </div>
+
+      </div>
+
+      <div class="tracer-dashboard-footer">
+        <div><span class="tracer-live-dot"></span>Data terhubung dengan sheet TRACER_STUDY</div>
+        <div id="tracerDashboardUpdated">Menunggu data...</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="card">
+
+
+    <div class="card-header">
+
+      <div>
+
+        <div class="card-title">
+          Alur Pendaftaran
+        </div>
+
+        <div class="card-subtitle">
+          Ikuti tahapan berikut.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="grid-3">
+
+
+      <div class="download-card">
+
+        <div class="download-icon">
+          1
+        </div>
+
+        <div>
+
+          <div class="download-title">
+            Lengkapi Data
+          </div>
+
+          <div class="download-desc">
+
+            Isi data mahasiswa,
+            akademik, skripsi dan publikasi.
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="download-card">
+
+        <div class="download-icon">
+          2
+        </div>
+
+        <div>
+
+          <div class="download-title">
+            Upload Berkas
+          </div>
+
+          <div class="download-desc">
+
+            Upload seluruh dokumen
+            persyaratan.
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="download-card">
+
+        <div class="download-icon">
+          3
+        </div>
+
+        <div>
+
+          <div class="download-title">
+            Verifikasi
+          </div>
+
+          <div class="download-desc">
+
+            Admin melakukan pemeriksaan
+            data dan dokumen.
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     PENDAFTARAN
+===================================================== -->
+
+<section
+  id="registration"
+  class="page">
+
+
+<div class="card">
+
+
+<div class="card-header">
+
+  <div>
+
+    <div class="card-title">
+      Pendaftaran Yudisium
+    </div>
+
+    <div class="card-subtitle">
+      Lengkapi seluruh data dengan benar.
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="alert alert-warning">
+
+  ⚠️ Semua kolom bertanda
+  <b>*</b> wajib diisi.
+  Ukuran maksimal setiap file adalah
+  <b>10 MB</b>.
+
+</div>
+
+
+<form id="registrationForm">
+
+
+<!-- DATA MAHASISWA -->
+
+<div class="section-title">
+
+  <div class="section-number">
+    1
+  </div>
+
+  <div>
+
+    <h3>
+      Data Mahasiswa
+    </h3>
+
+    <p>
+      Identitas mahasiswa.
+    </p>
+
+  </div>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="form-group">
+
+<label>
+  NIM <span class="required">*</span>
+</label>
+
+<input
+  type="text"
+  id="nim"
+  required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Nama Lengkap
+  <span class="required">*</span>
+</label>
+
+<input
+  type="text"
+  id="nama"
+  required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Program Studi
+  <span class="required">*</span>
+</label>
+
+<select
+  id="prodi"
+  required>
+
+<option value="">
+  Pilih Program Studi
+</option>
+
+<option>
+  Agroteknologi
+</option>
+
+<option>
+  Teknik Pertanian
+</option>
+
+<option>
+  Peternakan
+</option>
+
+<option>
+  Manajemen Sumberdaya Perairan
+</option>
+
+<option>
+  Agribisnis
+</option>
+
+<option>
+  Magister Ilmu Pertanian
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Tempat Lahir
+  <span class="required">*</span>
+</label>
+
+<input
+  type="text"
+  id="tempatLahir"
+  required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Tanggal Lahir
+  <span class="required">*</span>
+</label>
+
+<input
+  type="date"
+  id="tanggalLahir"
+  required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Jenis Kelamin
+  <span class="required">*</span>
+</label>
+
+<select
+  id="jenisKelamin"
+  required>
+
+<option value="">
+  Pilih
+</option>
+
+<option>
+  Laki-laki
+</option>
+
+<option>
+  Perempuan
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  No. HP
+  <span class="required">*</span>
+</label>
+
+<input
+  type="tel"
+  id="noHp"
+  required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Email
+  <span class="required">*</span>
+</label>
+
+<input
+  type="email"
+  id="email"
+  required>
+
+</div>
+
+
+</div>
+
+
+<!-- AKADEMIK -->
+
+<div class="section-title">
+
+<div class="section-number">
+  2
+</div>
+
+<div>
+
+<h3>
+  Data Akademik
+</h3>
+
+<p>
+  Data tahun studi dan IPK.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="grid-3">
+
+
+<div class="form-group">
+
+<label>
+  Tahun Masuk
+  <span class="required">*</span>
+</label>
+
+<input
+  type="number"
+  id="tahunMasuk"
+  min="2000"
+  max="2100"
+  required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Tahun Lulus
+  <span class="required">*</span>
+</label>
+
+<input
+  type="number"
+  id="tahunLulus"
+  min="2000"
+  max="2100"
+  required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  IPK
+  <span class="required">*</span>
+</label>
+
+<input
+  type="number"
+  id="ipk"
+  min="0"
+  max="4"
+  step="0.01"
+  placeholder="Contoh: 3.75"
+  required>
+
+</div>
+
+
+</div>
+
+
+<div class="calculation">
+
+
+<div class="calc-grid">
+
+
+<div class="calc-item">
+
+<div class="calc-label">
+  IPK
+</div>
+
+<div
+  class="calc-value"
+  id="ipkPreview">
+
+  -
+
+</div>
+
+</div>
+
+
+<div class="calc-item">
+
+<div class="calc-label">
+  Predikat
+</div>
+
+<div
+  class="calc-value"
+  id="predikatPreview">
+
+  -
+
+</div>
+
+</div>
+
+
+<div class="calc-item">
+
+<div class="calc-label">
+  Lama Studi
+</div>
+
+<div
+  class="calc-value"
+  id="lamaStudiPreview">
+
+  -
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- SKRIPSI -->
+
+<div class="section-title">
+
+<div class="section-number">
+  3
+</div>
+
+<div>
+
+<h3>
+  Data Skripsi & Publikasi
+</h3>
+
+<p>
+  Informasi skripsi dan publikasi.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Judul Skripsi
+  <span class="required">*</span>
+</label>
+
+<textarea
+  id="judulSkripsi"
+  required></textarea>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="form-group">
+
+<label>
+  Pembimbing 1
+  <span class="required">*</span>
+</label>
+
+<input
+  type="text"
+  id="pembimbing1"
+  required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Pembimbing 2
+  <span class="required">*</span>
+</label>
+
+<input
+  type="text"
+  id="pembimbing2"
+  required>
+
+</div>
+
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+  Judul Publikasi
+  <span class="required">*</span>
+</label>
+
+<textarea
+  id="judulPublikasi"
+  required></textarea>
+
+</div>
+
+
+<!-- BERKAS -->
+
+<div class="section-title">
+
+<div class="section-number">
+  4
+</div>
+
+<div>
+
+<h3>
+  Upload Persyaratan
+</h3>
+
+<p>
+  Upload 16 dokumen persyaratan yudisium sesuai daftar yang ditentukan.
+</p>
+
+</div>
+
+</div>
+
+
+<div
+  id="fileFields"
+  class="file-grid">
+</div>
+
+
+<div
+  style="
+    margin-top:25px;
+    display:flex;
+    justify-content:flex-end;
+  ">
+
+<button
+  type="submit"
+  class="btn btn-primary">
+
+  🚀 Kirim Pendaftaran
+
+</button>
+
+</div>
+
+
+</form>
+
+
+<div
+  id="registrationLoading"
+  class="loading">
+
+<div class="spinner"></div>
+
+<p>
+  Sedang mengunggah data dan berkas...
+</p>
+
+</div>
+
+
+<div id="registrationResult"></div>
+
+
+</div>
+
+
+</section>
+
+
+<!-- =====================================================
+     DOWNLOAD
+===================================================== -->
+
+<section
+  id="download"
+  class="page">
+
+
+<div class="card">
+
+
+<div class="card-header">
+
+<div>
+
+<div class="card-title">
+  Download Persyaratan
+</div>
+
+<div class="card-subtitle">
+  Pilih program studi untuk melihat persyaratan dan dokumen yang dapat di-download.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="form-group" style="max-width:650px;margin-bottom:20px;">
+
+<label for="downloadProdi">Program Studi</label>
+
+<select id="downloadProdi" onchange="loadDownloads()" style="width:100%;">
+  <option value="">-- Pilih Program Studi --</option>
+  <option value="Agroteknologi">Agroteknologi</option>
+  <option value="Teknik Pertanian">Teknik Pertanian</option>
+  <option value="Peternakan">Peternakan</option>
+  <option value="Manajemen Sumberdaya Perairan">Manajemen Sumberdaya Perairan</option>
+  <option value="Agrobisnis">Agrobisnis</option>
+  <option value="Magister Ilmu Pertanian">Magister Ilmu Pertanian</option>
+</select>
+
+</div>
+
+<div
+  id="downloadList"
+  class="download-grid">
+
+<div
+  class="loading"
+  style="display:block;">
+
+Memuat dokumen...
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+<!-- =====================================================
+     TRACER STUDY
+===================================================== -->
+
+<section id="tracer" class="page">
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Tracer Study Alumni</div>
+        <div class="card-subtitle">Pendataan kondisi dan aktivitas alumni setelah lulus.</div>
+      </div>
+    </div>
+
+    <form id="tracerForm" onsubmit="submitTracer(event)">
+      <div class="form-group">
+        <label>NIM <span class="required">*</span></label>
+        <input type="text" id="tracerNim" required>
+      </div>
+
+      <div class="grid">
+        <div class="form-group"><label>Nama Lengkap <span class="required">*</span></label><input type="text" id="tracerNama" required></div>
+        <div class="form-group"><label>Program Studi <span class="required">*</span></label>
+          <select id="tracerProdi" required>
+            <option value="">Pilih Program Studi</option>
+            <option>Agroteknologi</option><option>Teknik Pertanian</option><option>Peternakan</option>
+            <option>Manajemen Sumberdaya Perairan</option><option>Agrobisnis</option><option>Magister Ilmu Pertanian</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group"><label>Tahun Lulus <span class="required">*</span></label><input type="number" id="tracerTahunLulus" min="2000" max="2100" required></div>
+        <div class="form-group"><label>No. HP</label><input type="text" id="tracerNoHp"></div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group"><label>Email</label><input type="email" id="tracerEmail"></div>
+        <div class="form-group"><label>Status Saat Ini <span class="required">*</span></label>
+          <select id="tracerStatusPekerjaan" required>
+            <option value="">Pilih Status</option><option>Bekerja</option><option>Wirausaha</option><option>Melanjutkan Studi</option><option>Belum Bekerja</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group"><label>Nama Instansi/Perusahaan</label><input type="text" id="tracerNamaInstansi"></div>
+        <div class="form-group"><label>Jabatan</label><input type="text" id="tracerJabatan"></div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group"><label>Bidang Pekerjaan</label><input type="text" id="tracerBidang"></div>
+        <div class="form-group"><label>Lokasi Kerja</label><input type="text" id="tracerLokasi"></div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group"><label>Waktu Tunggu Mendapat Pekerjaan</label><select id="tracerWaktu"><option value="">Pilih</option><option>Kurang dari 3 bulan</option><option>3–6 bulan</option><option>7–12 bulan</option><option>Lebih dari 12 bulan</option><option>Belum bekerja</option></select></div>
+        <div class="form-group"><label>Kesesuaian Pekerjaan dengan Bidang Studi</label><select id="tracerKesesuaian"><option value="">Pilih</option><option>Sangat sesuai</option><option>Sesuai</option><option>Kurang sesuai</option><option>Tidak sesuai</option></select></div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group"><label>Sumber Informasi Mendapatkan Pekerjaan</label><select id="tracerSumber"><option value="">Pilih</option><option>Media sosial/Internet</option><option>Alumni/Teman</option><option>Campus/Universitas</option><option>Keluarga</option><option>Lamaran langsung</option><option>Lainnya</option></select></div>
+        <div class="form-group"><label>Pendapatan per Bulan</label><select id="tracerPendapatan"><option value="">Pilih</option><option>&lt; Rp2.000.000</option><option>Rp2.000.000–Rp4.000.000</option><option>Rp4.000.001–Rp6.000.000</option><option>&gt; Rp6.000.000</option><option>Tidak berkenan menjawab</option></select></div>
+      </div>
+
+      <div class="form-group"><label>Apakah Melanjutkan Studi?</label><select id="tracerLanjut"><option>Tidak</option><option>Ya</option></select></div>
+      <div class="grid">
+        <div class="form-group"><label>Perguruan Tinggi Lanjutan</label><input type="text" id="tracerPT"></div>
+        <div class="form-group"><label>Program Studi Lanjutan</label><input type="text" id="tracerProdiLanjut"></div>
+      </div>
+      <div class="form-group"><label>Alasan Melanjutkan Studi</label><textarea id="tracerAlasan"></textarea></div>
+      <div class="form-group"><label>Kompetensi yang Sangat Dibutuhkan di Dunia Kerja</label><textarea id="tracerKompetensi"></textarea></div>
+      <div class="form-group"><label>Saran untuk Fakultas Pertanian Universitas Musamus</label><textarea id="tracerSaran"></textarea></div>
+
+      <div id="tracerResult"></div>
+      <div style="margin-top:25px;display:flex;justify-content:flex-end;gap:10px;">
+        <button type="reset" class="btn btn-secondary">Reset</button>
+        <button type="submit" class="btn btn-primary">📊 Kirim Tracer Study</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+
+<!-- =====================================================
+     CEK STATUS
+===================================================== -->
+
+<section
+  id="status"
+  class="page">
+
+
+<div class="card">
+
+
+<div class="card-header">
+
+<div>
+
+<div class="card-title">
+  Cek Status Pendaftaran
+</div>
+
+<div class="card-subtitle">
+
+Masukkan Nomor Pendaftaran atau NPM/NIM untuk melihat
+status pendaftaran.
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="search-box">
+
+
+<input
+  type="text"
+  id="statusNomorPendaftaran"
+  placeholder="Contoh: YUD-2026-0001 atau 2022123456">
+
+
+<button
+  class="btn btn-primary"
+  onclick="checkStudentStatus()">
+
+🔎 Cek Status
+
+</button>
+
+
+</div>
+
+
+<div
+  id="statusLoading"
+  class="loading">
+
+<div class="spinner"></div>
+
+<p>
+  Mencari data mahasiswa...
+</p>
+
+</div>
+
+
+<div id="statusResult"></div>
+
+
+</div>
+
+
+</section>
+
+
+<!-- =====================================================
+     ADMIN
+===================================================== -->
+
+<section
+  id="admin"
+  class="page">
+
+
+<div class="card">
+
+
+<div id="adminLoginBox" class="card admin-login-modern">
+  <div class="admin-login-content">
+
+    <div class="admin-login-brand">
+      <div class="admin-login-icon">🔐</div>
+      <h2>Login Administrator</h2>
+      <p>Kelola pendaftaran Yudisium Faperta Unmus</p>
+    </div>
+
+    <div class="admin-login-panel">
+      <div class="admin-login-field">
+        <label for="adminUsername">Username Admin</label>
+        <div class="admin-login-input-wrap">
+          <span class="admin-login-input-icon">👤</span>
+          <input
+            type="text"
+            id="adminUsername"
+            class="admin-login-input"
+            placeholder="Masukkan username"
+            autocomplete="username">
+        </div>
+      </div>
+
+      <div class="admin-login-field">
+        <label for="adminPassword">Password Admin</label>
+        <div class="admin-login-input-wrap">
+          <span class="admin-login-input-icon">🔑</span>
+          <input
+            type="password"
+            id="adminPassword"
+            class="admin-login-input"
+            placeholder="Masukkan password"
+            autocomplete="current-password"
+            onkeydown="if(event.key==='Enter') adminLogin()">
+          <button
+            type="button"
+            class="btn admin-login-toggle"
+            id="adminPasswordToggle"
+            onclick="toggleAdminPassword()"
+            title="Lihat password">👁️</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary admin-login-submit" onclick="adminLogin()">
+        Masuk ke Dashboard &nbsp;→
+      </button>
+
+      <p class="admin-login-hint">Akses khusus pengguna administrator yang terdaftar.</p>
+    </div>
+  </div>
+</div>
+
+
+<div
+  id="adminDashboard"
+  style="display:none;">
+
+
+<div class="admin-toolbar">
+
+
+<div>
+
+<div class="card-title">
+  Dashboard Pendaftaran
+</div>
+
+<div class="card-subtitle">
+  Kelola dan verifikasi data mahasiswa.
+</div>
+
+<div
+  id="adminWelcome"
+  style="margin-top:8px;font-size:13px;color:#2563eb;font-weight:600;">
+</div>
+
+</div>
+
+
+<button
+  class="btn btn-light"
+  onclick="loadAdminData()">
+
+↻ Refresh
+
+</button>
+
+<button
+  type="button"
+  class="btn btn-danger"
+  onclick="adminLogout()">
+
+🚪 Logout
+
+</button>
+
+
+</div>
+
+
+<div class="admin-tabs" style="display:flex;gap:10px;flex-wrap:wrap;margin:18px 0;">
+  <button type="button" id="tabVerification" class="btn btn-primary" onclick="showAdminSection('verification')">📋 Verifikasi Pendaftaran</button>
+  <button type="button" id="tabValid" class="btn btn-light" onclick="showAdminSection('valid')">✅ Data Valid</button>
+  <button type="button" id="tabUsers" class="btn btn-light" onclick="showAdminSection('users')">👤 Manajemen User</button>
+</div>
+
+<div id="adminSectionVerification">
+  <div class="card" style="padding:18px;margin-bottom:18px;">
+    <div class="card-title">📋 Verifikasi Pendaftaran</div>
+    <div class="card-subtitle">Kelola dan verifikasi data pendaftaran mahasiswa.</div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Pendaftaran</th>
+          <th>Mahasiswa</th>
+          <th>Prodi</th>
+          <th>IPK</th>
+          <th>Predikat</th>
+          <th>Lama Studi</th>
+          <th>Status</th>
+          <th>Berkas</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="adminTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="adminSectionValid" style="display:none;">
+  <div class="card" style="padding:18px;margin-bottom:18px;">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;">
+      <div>
+        <div class="card-title">✅ Data Pendaftaran Valid</div>
+        <div class="card-subtitle">Daftar mahasiswa yang sudah berstatus Diverifikasi dan dapat diambil oleh verifikator.</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button type="button" class="btn btn-light" onclick="loadVerifiedData()">↻ Perbarui</button>
+        <button type="button" class="btn btn-primary" onclick="exportVerifiedExcel()">📊 Export Excel (.xlsx)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:16px;margin-bottom:18px;">
+    <div style="display:grid;grid-template-columns:minmax(220px,2fr) minmax(180px,1fr);gap:12px;">
+      <input type="text" id="validSearch" placeholder="🔎 Cari nama, NPM/NIM, jurusan..." oninput="renderVerifiedTable()">
+      <select id="validProdiFilter" onchange="renderVerifiedTable()">
+        <option value="">Semua Jurusan</option>
+      </select>
+    </div>
+    <div id="validSummary" style="margin-top:12px;font-size:13px;color:#64748b;font-weight:600;"></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>NAMA</th>
+          <th>NPM</th>
+          <th>Jurusan</th>
+          <th>Jenjang</th>
+          <th>IPK</th>
+          <th>Predikat Kelulusan</th>
+          <th>Gelar Akademik</th>
+          <th>Alumni</th>
+        </tr>
+      </thead>
+      <tbody id="validTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="adminSectionUsers" style="display:none;">
+  <div class="admin-user-box">
+    <div class="card-header" style="margin-bottom:15px;">
+      <div>
+        <div class="card-title" style="font-size:16px;">👤 Manajemen User</div>
+        <div class="card-subtitle">Tambah dan kelola akun yang dapat mengakses Dashboard Admin.</div>
+      </div>
+    </div>
+
+    <div class="admin-user-grid">
+      <div class="form-group">
+        <label>Username <span class="required">*</span></label>
+        <input type="text" id="newAdminUsername" placeholder="Contoh: operator01" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Password <span class="required">*</span></label>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <input type="password" id="newAdminPassword" placeholder="Minimal 6 karakter" autocomplete="new-password" style="flex:1;">
+          <button type="button" class="btn btn-light" id="newAdminPasswordToggle" onclick="toggleNewAdminPassword()" title="Lihat password">👁️</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Nama User <span class="required">*</span></label>
+        <input type="text" id="newAdminNama" placeholder="Nama lengkap user">
+      </div>
+      <div class="form-group">
+        <label>Level</label>
+        <select id="newAdminLevel">
+          <option value="Operator">Operator</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="newAdminStatus">
+          <option value="Aktif">Aktif</option>
+          <option value="Nonaktif">Nonaktif</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="admin-user-actions">
+      <button type="button" class="btn btn-primary" onclick="addAdminUser()">➕ Simpan User</button>
+      <button type="button" class="btn btn-light" onclick="resetAdminUserForm()">↺ Reset</button>
+    </div>
+
+    <div id="adminUserMessage" style="margin-top:12px;"></div>
+
+    <div style="margin-top:20px;">
+      <div class="card-title" style="font-size:14px;margin-bottom:10px;">Daftar User</div>
+      <div class="table-wrap">
+        <table class="admin-user-table">
+          <thead><tr><th>No</th><th>Username</th><th>Password</th><th>Nama</th><th>Level</th><th>Status</th><th>Aksi</th></tr></thead>
+          <tbody id="adminUserTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+
+</div>
+
+
+</section>
+
+
+</div>
+
+
+<footer>
+
+© Fakultas Pertanian Universitas Musamus
+
+</footer>
+
+
+</main>
+
+
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div
+  id="verifyModal"
+  class="modal">
+
+
+<div class="modal-content">
+
+
+<div class="modal-header">
+
+
+<div class="modal-title">
+  Verifikasi Pendaftaran
+</div>
+
+
+<button
+  class="close"
+  onclick="closeModal()">
+
+×
+
+</button>
+
+
+</div>
+
+
+<input
+  type="hidden"
+  id="verifyRow">
+
+
+<div class="form-group">
+
+<label>
+  Status
+</label>
+
+
+<select id="verifyStatus">
+
+<option>
+  Diajukan
+</option>
+
+<option>
+  Diverifikasi
+</option>
+
+<option>
+  Perlu Perbaikan
+</option>
+
+<option>
+  Ditolak
+</option>
+
+</select>
+
+
+</div>
+
+
+<br>
+
+
+<div class="form-group">
+
+<label>
+  Catatan Admin
+</label>
+
+
+<textarea
+  id="verifyNote"
+  placeholder="Masukkan catatan...">
+</textarea>
+
+
+</div>
+
+
+<br>
+
+
+<button
+  class="btn btn-primary"
+  onclick="saveVerification()">
+
+Simpan Verifikasi
+
+</button>
+
+
+</div>
+
+</div>
+
+
+<script>
+/* ============================================================
+   GITHUB PAGES ↔ GOOGLE APPS SCRIPT COMPATIBILITY BRIDGE
+   ------------------------------------------------------------
+   Kode aplikasi lama tetap memakai google.script.run.
+   Bridge ini membuat sintaks tersebut tetap berjalan ketika
+   Index.html dibuka dari GitHub Pages.
+============================================================ */
+
+window.GAS_API_URL = "https://script.google.com/macros/s/AKfycbymwx5mDvTIumwX9PYn-5i1bl41Jiv2vE52Myb4Q5lLA2vh6C6_i7My_FXiRO7F_eWJbQ/exec";
+
+(function () {
+  const API_URL = window.GAS_API_URL;
+
+  function callAppsScript(action, args) {
+    return fetch(API_URL, {
+      method: 'POST',
+      redirect: 'follow',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      },
+      body: JSON.stringify({
+        action: action,
+        args: Array.isArray(args) ? args : []
+      })
+    }).then(function (response) {
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status + ' dari Google Apps Script.');
+      }
+      return response.text();
+    }).then(function (text) {
+      let payload;
+
+      try {
+        payload = JSON.parse(text);
+      } catch (e) {
+        throw new Error(
+          'Respons Google Apps Script tidak valid. ' +
+          (text ? String(text).slice(0, 300) : 'Respons kosong.')
+        );
+      }
+
+      if (!payload || payload.ok !== true) {
+        throw new Error(
+          payload && payload.error
+            ? payload.error
+            : 'Google Apps Script mengembalikan kesalahan.'
+        );
+      }
+
+      return payload.result;
+    });
+  }
+
+  function createRunner() {
+    let successHandler = null;
+    let failureHandler = null;
+    let userObject;
+
+    const runner = new Proxy({}, {
+      get: function (_target, property) {
+
+        if (property === 'withSuccessHandler') {
+          return function (handler) {
+            successHandler = typeof handler === 'function' ? handler : null;
+            return runner;
+          };
+        }
+
+        if (property === 'withFailureHandler') {
+          return function (handler) {
+            failureHandler = typeof handler === 'function' ? handler : null;
+            return runner;
+          };
+        }
+
+        if (property === 'withUserObject') {
+          return function (obj) {
+            userObject = obj;
+            return runner;
+          };
+        }
+
+        if (property === 'withLogger') {
+          return function () {
+            return runner;
+          };
+        }
+
+        return function () {
+          const args = Array.prototype.slice.call(arguments);
+
+          callAppsScript(String(property), args)
+            .then(function (result) {
+              if (successHandler) {
+                successHandler(result, userObject);
+              }
+            })
+            .catch(function (error) {
+              if (failureHandler) {
+                failureHandler(error, userObject);
+              } else {
+                console.error('Google Apps Script:', error);
+              }
+            });
+
+          return runner;
+        };
+      }
+    });
+
+    return runner;
+  }
+
+  window.google = window.google || {};
+  window.google.script = window.google.script || {};
+
+  Object.defineProperty(window.google.script, 'run', {
+    configurable: true,
+    enumerable: true,
+    get: function () {
+      return createRunner();
+    }
+  });
+})();
+
+
+
+/* =====================================================
+   NAVIGASI
+===================================================== */
+
+function showPage(pageId,button){
+
+  document
+    .querySelectorAll('.page')
+    .forEach(function(page){
+
+      page.classList.remove('active');
+
+    });
+
+
+  document
+    .getElementById(pageId)
+    .classList.add('active');
+
+
+  document
+    .querySelectorAll('.menu-btn')
+    .forEach(function(btn){
+
+      btn.classList.remove('active');
+
+    });
+
+
+  if(button){
+
+    button.classList.add('active');
+
+  }
+
+
+  document
+    .getElementById('sidebar')
+    .classList.remove('open');
+
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+
+  if(pageId==='download'){
+
+    loadDownloads();
+
+  }
+
+}
+
+
+function showPageById(pageId){
+
+  const button =
+    [...document.querySelectorAll('.menu-btn')]
+      .find(function(btn){
+
+        return btn
+          .getAttribute('onclick')
+          ?.includes(
+            "'" + pageId + "'"
+          );
+
+      });
+
+
+  showPage(pageId,button);
+
+}
+
+
+function toggleSidebar(){
+
+  document
+    .getElementById('sidebar')
+    .classList.toggle('open');
+
+}
+
+
+/* =====================================================
+   TRACER DASHBOARD BERANDA
+===================================================== */
+
+function tracerEntries(data){
+  return Object.keys(data || {}).map(function(key){
+    return {label:String(key),value:Number(data[key])||0};
+  }).filter(function(item){return item.value>0;}).sort(function(a,b){
+    if(b.value!==a.value) return b.value-a.value;
+    return a.label.localeCompare(b.label);
+  });
+}
+
+function tracerPalette(i){
+  var p=['#0f6b3f','#36a269','#6ccf93','#f0b44d','#d96b5f','#7b83d8','#55a8c9','#9b70c8'];
+  return p[i%p.length];
+}
+
+function tracerStatusColor(label){
+  var key=String(label||'').trim().toLowerCase();
+  if(key==='bekerja') return '#16a34a';
+  if(key==='wirausaha') return '#f59e0b';
+  if(key==='melanjutkan studi') return '#2563eb';
+  if(key==='belum bekerja') return '#dc2626';
+  return '#7c3aed';
+}
+
+function renderTracerDonut(elementId,data,totalId){
+  var box=document.getElementById(elementId); if(!box)return;
+  var entries=tracerEntries(data), total=entries.reduce(function(s,x){return s+x.value},0);
+  var totalEl=document.getElementById(totalId); if(totalEl)totalEl.textContent=total;
+  if(!entries.length){box.innerHTML='<div class="tracer-empty">Belum ada data Tracer Study.</div>';return;}
+  var r=72,cx=95,cy=95,c=2*Math.PI*r,offset=0;
+  var circles=entries.map(function(item,i){
+    var len=c*(item.value/total), color=tracerStatusColor(item.label);
+    var out='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="22" stroke-dasharray="'+len+' '+(c-len)+'" stroke-dashoffset="'+(-offset)+'" stroke-linecap="butt"></circle>';
+    offset+=len; return out;
+  }).join('');
+  var legend=entries.map(function(item,i){
+    return '<div class="tracer-legend-row"><span class="tracer-legend-dot" style="background:'+tracerStatusColor(item.label)+'"></span><span class="tracer-legend-name">'+escapeHtml(item.label)+'</span><span class="tracer-legend-value">'+item.value+'</span></div>';
+  }).join('');
+  box.innerHTML='<div class="tracer-donut-layout"><div class="tracer-donut-wrap"><svg class="tracer-donut-svg" viewBox="0 0 190 190" aria-label="Diagram status pekerjaan">'+circles+'</svg><div class="tracer-donut-hole"><div class="tracer-donut-number">'+total+'</div><div class="tracer-donut-label">Responden</div></div></div><div class="tracer-legend">'+legend+'</div></div>';
+}
+
+function tracerProdiColor(label){
+  var key=String(label||'').trim().toLowerCase();
+  if(key==='agroteknologi') return '#16a34a';
+  if(key==='teknik pertanian') return '#dc2626';
+  if(key==='peternakan') return '#ffffff';
+  if(key==='manajemen sumberdaya perairan') return '#2563eb';
+  if(key==='agrobisnis' || key==='agribisnis') return '#6b7280';
+  if(key==='magister ilmu pertanian') return '#7c3aed';
+  return '#0f6b3f';
+}
+
+function renderTracerHorizontal(elementId,data,totalId){
+  var box=document.getElementById(elementId); if(!box)return;
+  var entries=tracerEntries(data), total=entries.reduce(function(s,x){return s+x.value},0), max=entries.length?Math.max.apply(null,entries.map(function(x){return x.value})):0;
+  var totalEl=document.getElementById(totalId); if(totalEl)totalEl.textContent=total;
+  if(!entries.length){box.innerHTML='<div class="tracer-empty">Belum ada data Tracer Study.</div>';return;}
+  var isProdi=(elementId==='tracerProdiChart');
+  box.innerHTML='<div class="tracer-hbar-list">'+entries.map(function(item){
+    var width=Math.max(4,item.value/max*100);
+    var color=isProdi ? tracerProdiColor(item.label) : tracerPalette(entries.indexOf(item));
+    var textColor=(isProdi && String(item.label).trim().toLowerCase()==='peternakan') ? '#374151' : '#fff';
+    var border=(isProdi && String(item.label).trim().toLowerCase()==='peternakan') ? 'border:1px solid #d1d5db;' : '';
+    return '<div class="tracer-hbar-row" title="'+escapeHtml(item.label)+': '+item.value+' responden"><div class="tracer-hbar-label">'+escapeHtml(item.label)+'</div><div class="tracer-hbar-track"><div class="tracer-hbar-fill" data-width="'+width+'%" style="background:'+color+';'+border+'color:'+textColor+';"></div></div><div class="tracer-hbar-value">'+item.value+'</div></div>';
+  }).join('')+'</div>';
+  requestAnimationFrame(function(){box.querySelectorAll('.tracer-hbar-fill').forEach(function(el){el.style.width=el.getAttribute('data-width')})});
+}
+
+function renderTracerColumns(elementId,data,totalId){
+  var box=document.getElementById(elementId); if(!box)return;
+  var entries=tracerEntries(data).sort(function(a,b){return String(a.label).localeCompare(String(b.label),undefined,{numeric:true})});
+  var total=entries.reduce(function(s,x){return s+x.value},0), max=entries.length?Math.max.apply(null,entries.map(function(x){return x.value})):0;
+  var totalEl=document.getElementById(totalId); if(totalEl)totalEl.textContent=total;
+  if(!entries.length){box.innerHTML='<div class="tracer-empty">Belum ada data Tracer Study.</div>';return;}
+  var ticks=[max,Math.round(max*.75),Math.round(max*.5),Math.round(max*.25),0];
+  var colors=['#16a34a','#ef4444','#2563eb','#f59e0b','#8b5cf6','#06b6d4','#ec4899','#84cc16','#f97316','#64748b'];
+  box.innerHTML='<div class="tracer-column-wrap"><div class="tracer-column-y">'+ticks.map(function(v){return '<span>'+v+'</span>'}).join('')+'</div><div class="tracer-column-plot">'+entries.map(function(item,i){var h=Math.max(5,item.value/max*100),color=colors[i%colors.length],dark=i%2===0?'#047857':'#b91c1c';return '<div class="tracer-column-item"><div class="tracer-column-bar" data-height="'+h+'%" style="background:linear-gradient(180deg,'+color+','+dark+');box-shadow:0 8px 16px '+color+'44;"><span class="tracer-column-value" style="color:'+color+'">'+item.value+'</span><span class="tracer-column-label">'+escapeHtml(item.label)+'</span></div></div>'}).join('')+'</div></div>';
+  requestAnimationFrame(function(){box.querySelectorAll('.tracer-column-bar').forEach(function(el){el.style.height=el.getAttribute('data-height')})});
+}
+
+function renderTracerSuitability(elementId,data,totalId){
+  var box=document.getElementById(elementId); if(!box)return;
+  var entries=tracerEntries(data), total=entries.reduce(function(s,x){return s+x.value},0), max=entries.length?Math.max.apply(null,entries.map(function(x){return x.value})):0;
+  var totalEl=document.getElementById(totalId); if(totalEl)totalEl.textContent=total;
+  if(!entries.length){box.innerHTML='<div class="tracer-empty">Belum ada data Tracer Study.</div>';return;}
+
+  var palette={
+    'sangat sesuai':{color:'#16a34a',soft:'#dcfce7',icon:'🎯'},
+    'sesuai':{color:'#2563eb',soft:'#dbeafe',icon:'👍'},
+    'kurang sesuai':{color:'#f59e0b',soft:'#fef3c7',icon:'⚠️'},
+    'tidak sesuai':{color:'#ef4444',soft:'#fee2e2',icon:'✕'}
+  };
+  var fallback=['#7c3aed','#06b6d4','#ec4899','#64748b'];
+
+  box.innerHTML='<div class="tracer-suitability-wrap">'+
+    '<div class="tracer-suitability-summary">'+
+      '<div class="tracer-suitability-ring"><div class="tracer-suitability-ring-inner"><strong>'+total+'</strong><span>Responden</span></div></div>'+
+      '<div class="tracer-suitability-summary-text"><div class="tracer-suitability-kicker">Kesesuaian pekerjaan</div><div class="tracer-suitability-headline">Sebaran alumni berdasarkan kesesuaian bidang studi</div><div class="tracer-suitability-note">Setiap kategori ditampilkan dengan warna berbeda agar mudah dibandingkan.</div></div>'+
+    '</div>'+
+    '<div class="tracer-suitability-cards">'+entries.map(function(item,i){
+      var key=String(item.label||'').trim().toLowerCase();
+      var cfg=palette[key]||{color:fallback[i%fallback.length],soft:'#f3f4f6',icon:'•'};
+      var pct=total?item.value/total*100:0;
+      var width=max?Math.max(5,item.value/max*100):0;
+      return '<div class="tracer-suitability-item" style="--s-color:'+cfg.color+';--s-soft:'+cfg.soft+';">'+
+        '<div class="tracer-suitability-item-top"><div class="tracer-suitability-icon">'+cfg.icon+'</div><div class="tracer-suitability-name">'+escapeHtml(item.label)+'</div><div class="tracer-suitability-number">'+item.value+'</div></div>'+
+        '<div class="tracer-suitability-track"><div class="tracer-suitability-fill" data-width="'+width+'%" style="background:linear-gradient(90deg,'+cfg.color+', '+cfg.color+'cc);"></div></div>'+
+        '<div class="tracer-suitability-meta"><span>'+pct.toFixed(1)+'% dari responden</span><span>'+item.value+' alumni</span></div>'+
+      '</div>';
+    }).join('')+'</div>'+
+  '</div>';
+
+  requestAnimationFrame(function(){box.querySelectorAll('.tracer-suitability-fill').forEach(function(el){el.style.width=el.getAttribute('data-width')})});
+}
+
+function loadTracerDashboard(){
+
+  const total = document.getElementById('tracerTotal');
+  const statusCount = document.getElementById('tracerStatusCount');
+  const prodiCount = document.getElementById('tracerProdiCount');
+  const tahunCount = document.getElementById('tracerTahunCount');
+
+  if(total) total.textContent = '…';
+  if(statusCount) statusCount.textContent = '…';
+  if(prodiCount) prodiCount.textContent = '…';
+  if(tahunCount) tahunCount.textContent = '…';
+
+  google.script.run
+    .withSuccessHandler(function(data){
+
+      data = data || {};
+
+      if(total) total.textContent = Number(data.total || 0);
+      if(statusCount) statusCount.textContent = Object.keys(data.statusPekerjaan || {}).length;
+      if(prodiCount) prodiCount.textContent = Object.keys(data.prodi || {}).length;
+      if(tahunCount) tahunCount.textContent = Object.keys(data.tahunLulus || {}).length;
+
+      renderTracerDonut('tracerStatusChart', data.statusPekerjaan, 'tracerStatusTotal');
+      renderTracerHorizontal('tracerProdiChart', data.prodi, 'tracerProdiTotal');
+      renderTracerColumns('tracerTahunChart', data.tahunLulus, 'tracerTahunTotal');
+      renderTracerSuitability('tracerKesesuaianChart', data.kesesuaianBidang, 'tracerKesesuaianTotal');
+
+      const updated = document.getElementById('tracerDashboardUpdated');
+      if(updated){
+        updated.textContent = 'Data grafik diperbarui: ' + new Date().toLocaleString('id-ID');
+      }
+    })
+    .withFailureHandler(function(error){
+      ['tracerStatusChart','tracerProdiChart','tracerTahunChart','tracerKesesuaianChart'].forEach(function(id){
+        const box = document.getElementById(id);
+        if(box) box.innerHTML = '<div class="tracer-empty">Gagal memuat grafik: ' + escapeHtml((error && error.message) || 'Terjadi kesalahan.') + '</div>';
+      });
+    })
+    .getTracerDashboardStats();
+}
+
+
+/* =====================================================
+   FILE
+===================================================== */
+
+const fileDefinitions=[
+
+  [
+    'naskahSkripsi',
+    'Naskah Skripsi'
+  ],
+
+  [
+    'naskahPublikasi',
+    'Naskah Publikasi'
+  ],
+
+  [
+    'coverJudul',
+    'Cover / Judul Skripsi'
+  ],
+
+  [
+    'krs',
+    'KRS Semester 1 s/d Semester Akhir'
+  ],
+
+  [
+    'khs',
+    'KHS Semester 1 s/d Semester Akhir'
+  ],
+
+  [
+    'transkrip',
+    'Transkrip Nilai Sementara'
+  ],
+
+  [
+    'pengesahanSkripsi',
+    'Lembar Halaman Pengesahan Skripsi'
+  ],
+
+  [
+    'persetujuanSkripsi',
+    'Lembar Persetujuan Skripsi'
+  ],
+
+  [
+    'pengesahanPublikasi',
+    'Lembar Pengesahan Naskah Publikasi'
+  ],
+
+  [
+    'distribusiPublikasi',
+    'Lembar Distribusi Naskah Publikasi'
+  ],
+
+  [
+    'distribusiSkripsi',
+    'Lembar Distribusi Skripsi'
+  ],
+
+  [
+    'konsultasiSkripsi',
+    'Lembar Konsultasi Bimbingan Skripsi'
+  ],
+
+  [
+    'bebasAkademik',
+    'Surat Bebas Akademik'
+  ],
+
+  [
+    'bebasTanggungan',
+    'Surat Keterangan Bebas Tanggungan'
+  ],
+
+  [
+    'bebasPerpustakaan',
+    'Surat Keterangan Bebas Perpustakaan'
+  ],
+
+  [
+    'telahDaftarYudisium',
+    'Surat Keterangan Telah Mendaftar Yudisium'
+  ],
+
+  [
+    'pasFoto46',
+    'Pas Foto Berwarna 4 x 6'
+  ]
+
+];
+
+
+function renderFileFields(){
+
+  const container =
+    document.getElementById(
+      'fileFields'
+    );
+
+
+  container.innerHTML='';
+
+
+  fileDefinitions.forEach(
+    function(item,index){
+
+      const div =
+        document.createElement('div');
+
+
+      div.className='file-item';
+
+
+      div.innerHTML=`
+
+        <div class="file-label">
+
+          <span class="file-number">
+
+            ${index+1}
+
+          </span>
+
+          ${item[1]}
+
+          <span class="required">
+            *
+          </span>
+
+        </div>
+
+
+        <input
+
+          class="file-input"
+
+          type="file"
+
+          id="file_${item[0]}"
+
+          accept="
+            .pdf,
+            .jpg,
+            .jpeg,
+            .png,
+            .doc,
+            .docx
+          "
+
+          required>
+
+      `;
+
+
+      container.appendChild(div);
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   IPK
+===================================================== */
+
+function getPredikat(ipk){
+
+  ipk=Number(ipk);
+
+
+  if(isNaN(ipk)){
+    return '-';
+  }
+
+
+  if(ipk>=3.51){
+
+    return 'Dengan Pujian (Cumlaude)';
+
+  }
+
+
+  if(ipk>=3.01){
+
+    return 'Sangat Memuaskan';
+
+  }
+
+
+  if(ipk>=2.76){
+
+    return 'Memuaskan';
+
+  }
+
+
+  if(ipk>=2.00){
+
+    return 'Cukup Memuaskan';
+
+  }
+
+
+  return 'Belum Memenuhi';
+
+}
+
+
+function updateCalculation(){
+
+  const ipk =
+    document.getElementById(
+      'ipk'
+    ).value;
+
+
+  const masuk =
+    document.getElementById(
+      'tahunMasuk'
+    ).value;
+
+
+  const lulus =
+    document.getElementById(
+      'tahunLulus'
+    ).value;
+
+
+  document
+    .getElementById(
+      'ipkPreview'
+    )
+    .textContent =
+
+      ipk
+      ? Number(ipk).toFixed(2)
+      : '-';
+
+
+  document
+    .getElementById(
+      'predikatPreview'
+    )
+    .textContent =
+
+      ipk
+      ? getPredikat(ipk)
+      : '-';
+
+
+  if(
+    masuk &&
+    lulus &&
+    Number(lulus)>=Number(masuk)
+  ){
+
+    document
+      .getElementById(
+        'lamaStudiPreview'
+      )
+      .textContent =
+
+      (
+        Number(lulus) -
+        Number(masuk)
+      ) + ' tahun';
+
+  }
+
+  else{
+
+    document
+      .getElementById(
+        'lamaStudiPreview'
+      )
+      .textContent='-';
+
+  }
+
+}
+
+
+[
+  'ipk',
+  'tahunMasuk',
+  'tahunLulus'
+]
+.forEach(function(id){
+
+  document
+    .getElementById(id)
+    .addEventListener(
+      'input',
+      updateCalculation
+    );
+
+});
+
+
+/* =====================================================
+   FILE BASE64
+===================================================== */
+
+function fileToBase64(file){
+
+  return new Promise(function(resolve,reject){
+
+    const reader = new FileReader();
+
+    reader.onload = function(){
+      resolve({
+        name:file.name,
+        type:file.type,
+        data:reader.result
+      });
+    };
+
+    reader.onerror = function(){
+      reject(new Error('Gagal membaca file ' + file.name));
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+
+/* =====================================================
+   OPTIMASI FOTO
+   Foto pas 4x6 dikompres di browser sebelum dikirim.
+===================================================== */
+
+function compressImageForUpload(file, maxWidth, maxHeight, quality){
+
+  if(!file || !file.type || file.type.indexOf('image/') !== 0){
+    return Promise.resolve(file);
+  }
+
+  return new Promise(function(resolve){
+
+    const img = new Image();
+    const reader = new FileReader();
+
+    reader.onload = function(event){
+      img.onload = function(){
+
+        let width = img.naturalWidth;
+        let height = img.naturalHeight;
+        const ratio = Math.min(1, maxWidth / width, maxHeight / height);
+
+        width = Math.max(1, Math.round(width * ratio));
+        height = Math.max(1, Math.round(height * ratio));
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d', {alpha:false});
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(function(blob){
+          if(!blob || blob.size >= file.size){
+            resolve(file);
+            return;
+          }
+
+          const baseName = file.name.replace(/\.[^.]+$/, '');
+          resolve(new File([blob], baseName + '.jpg', {
+            type:'image/jpeg',
+            lastModified:Date.now()
+          }));
+        }, 'image/jpeg', quality);
+      };
+
+      img.onerror = function(){ resolve(file); };
+      img.src = event.target.result;
+    };
+
+    reader.onerror = function(){ resolve(file); };
+    reader.readAsDataURL(file);
+  });
+}
+
+
+async function prepareUploadFile(file, key){
+
+  if(key === 'pasFoto46' && file.type && file.type.indexOf('image/') === 0){
+    return await compressImageForUpload(file, 900, 1200, 0.82);
+  }
+
+  return file;
+}
+
+
+/* =====================================================
+   SUBMIT
+===================================================== */
+
+document
+  .getElementById(
+    'registrationForm'
+  )
+  .addEventListener(
+    'submit',
+    async function(event){
+
+      event.preventDefault();
+
+
+      const loading =
+        document.getElementById(
+          'registrationLoading'
+        );
+
+
+      const result =
+        document.getElementById(
+          'registrationResult'
+        );
+
+
+      result.innerHTML='';
+
+      loading.style.display='block';
+
+
+      try{
+
+        const files={};
+
+
+        const uploadJobs = fileDefinitions.map(async function(item){
+
+          const input = document.getElementById('file_'+item[0]);
+
+          if(!input.files || !input.files.length){
+            throw new Error(item[1] + ' wajib diunggah.');
+          }
+
+          const originalFile = input.files[0];
+
+          if(originalFile.size > 10*1024*1024){
+            throw new Error('File ' + originalFile.name + ' lebih dari 10 MB.');
+          }
+
+          const file = await prepareUploadFile(originalFile, item[0]);
+
+          if(file.size > 10*1024*1024){
+            throw new Error('File ' + file.name + ' lebih dari 10 MB setelah diproses.');
+          }
+
+          const encoded = await fileToBase64(file);
+          files[item[0]] = encoded;
+        });
+
+        await Promise.all(uploadJobs);
+
+
+        const data={
+
+          nim:
+            document
+              .getElementById('nim')
+              .value,
+
+          nama:
+            document
+              .getElementById('nama')
+              .value,
+
+          prodi:
+            document
+              .getElementById('prodi')
+              .value,
+
+          tempatLahir:
+            document
+              .getElementById('tempatLahir')
+              .value,
+
+          tanggalLahir:
+            document
+              .getElementById('tanggalLahir')
+              .value,
+
+          jenisKelamin:
+            document
+              .getElementById('jenisKelamin')
+              .value,
+
+          noHp:
+            document
+              .getElementById('noHp')
+              .value,
+
+          email:
+            document
+              .getElementById('email')
+              .value,
+
+          tahunMasuk:
+            document
+              .getElementById('tahunMasuk')
+              .value,
+
+          tahunLulus:
+            document
+              .getElementById('tahunLulus')
+              .value,
+
+          ipk:
+            document
+              .getElementById('ipk')
+              .value,
+
+          judulSkripsi:
+            document
+              .getElementById('judulSkripsi')
+              .value,
+
+          pembimbing1:
+            document
+              .getElementById('pembimbing1')
+              .value,
+
+          pembimbing2:
+            document
+              .getElementById('pembimbing2')
+              .value,
+
+          judulPublikasi:
+            document
+              .getElementById('judulPublikasi')
+              .value,
+
+          files:files
+
+        };
+
+
+        loading.innerHTML = '<div class="spinner"></div><p>⏳ Mengunggah 17 berkas ke Google Drive...<br><small>Jangan tutup halaman sampai proses selesai.</small></p>';
+
+
+        google.script.run
+
+          .withSuccessHandler(
+            function(response){
+
+              loading.style.display='none';
+
+
+              result.innerHTML=`
+
+                <div class="success-box">
+
+                  <h3 style="margin-top:0;">
+
+                    ✓ Pendaftaran Berhasil
+
+                  </h3>
+
+
+                  <p>
+
+                    Data dan seluruh berkas
+                    berhasil dikirim.
+
+                  </p>
+
+
+                  <div class="grid-3">
+
+
+                    <div>
+
+                      <small>
+                        Nomor Pendaftaran
+                      </small>
+
+                      <br>
+
+                      <b>
+                        ${response.nomorPendaftaran}
+                      </b>
+
+                    </div>
+
+
+                    <div>
+
+                      <small>
+                        IPK
+                      </small>
+
+                      <br>
+
+                      <b>
+                        ${
+                          Number(
+                            response.ipk
+                          ).toFixed(2)
+                        }
+                      </b>
+
+                    </div>
+
+
+                    <div>
+
+                      <small>
+                        Predikat
+                      </small>
+
+                      <br>
+
+                      <b>
+                        ${response.predikat}
+                      </b>
+
+                    </div>
+
+
+                  </div>
+
+
+                  <p>
+
+                    Simpan nomor pendaftaran
+                    dan gunakan menu
+                    <b>Cek Status</b>.
+
+                  </p>
+
+
+                </div>
+
+              `;
+
+
+              document
+                .getElementById(
+                  'registrationForm'
+                )
+                .reset();
+
+
+              updateCalculation();
+
+
+              window.scrollTo({
+                top:0,
+                behavior:'smooth'
+              });
+
+            }
+          )
+
+
+          .withFailureHandler(
+            function(error){
+
+              loading.style.display='none';
+
+
+              result.innerHTML=`
+
+                <div class="error-box">
+
+                  <b>
+                    Pendaftaran gagal
+                  </b>
+
+                  <br><br>
+
+                  ${
+                    escapeHtml(
+                      error.message
+                    )
+                  }
+
+                </div>
+
+              `;
+
+            }
+          )
+
+
+          .submitRegistration(data);
+
+
+      }
+
+      catch(error){
+
+        loading.style.display='none';
+
+
+        result.innerHTML=`
+
+          <div class="error-box">
+
+            <b>
+              Pendaftaran gagal
+            </b>
+
+            <br><br>
+
+            ${
+              escapeHtml(
+                error.message
+              )
+            }
+
+          </div>
+
+        `;
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   TRACER STUDY ALUMNI
+===================================================== */
+
+function submitTracer(event){
+
+  event.preventDefault();
+
+  const result = document.getElementById('tracerResult');
+
+  const data = {
+    nim: document.getElementById('tracerNim').value.trim(),
+    nama: document.getElementById('tracerNama').value.trim(),
+    prodi: document.getElementById('tracerProdi').value,
+    tahunLulus: document.getElementById('tracerTahunLulus').value,
+    noHp: document.getElementById('tracerNoHp').value.trim(),
+    email: document.getElementById('tracerEmail').value.trim(),
+    statusPekerjaan: document.getElementById('tracerStatusPekerjaan').value,
+    namaInstansi: document.getElementById('tracerNamaInstansi').value.trim(),
+    jabatan: document.getElementById('tracerJabatan').value.trim(),
+    bidangPekerjaan: document.getElementById('tracerBidang').value.trim(),
+    lokasiKerja: document.getElementById('tracerLokasi').value.trim(),
+    waktuTunggu: document.getElementById('tracerWaktu').value,
+    kesesuaianBidang: document.getElementById('tracerKesesuaian').value,
+    sumberInformasi: document.getElementById('tracerSumber').value,
+    pendapatan: document.getElementById('tracerPendapatan').value,
+    melanjutkanStudi: document.getElementById('tracerLanjut').value,
+    ptLanjutan: document.getElementById('tracerPT').value.trim(),
+    prodiLanjutan: document.getElementById('tracerProdiLanjut').value.trim(),
+    alasanStudi: document.getElementById('tracerAlasan').value.trim(),
+    kompetensi: document.getElementById('tracerKompetensi').value.trim(),
+    saran: document.getElementById('tracerSaran').value.trim()
+  };
+
+  if (!data.nim || !data.nama || !data.prodi || !data.tahunLulus || !data.statusPekerjaan) {
+    result.innerHTML = '<div class="alert alert-warning">NIM, Nama Lengkap, Program Studi, Tahun Lulus, dan Status Saat Ini wajib diisi.</div>';
+    return;
+  }
+
+  result.innerHTML = '<div class="alert alert-info">⏳ Mengirim data Tracer Study...</div>';
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      result.innerHTML = '<div class="alert alert-success">✅ ' + escapeHtml((res && res.message) || 'Tracer Study berhasil dikirim.') + '</div>';
+      document.getElementById('tracerForm').reset();
+      loadTracerDashboard();
+    })
+    .withFailureHandler(function(error){
+      result.innerHTML = '<div class="alert alert-danger">❌ ' + escapeHtml((error && error.message) || 'Gagal mengirim data Tracer Study.') + '</div>';
+    })
+    .submitTracerStudy(data);
+}
+
+
+/* =====================================================
+   CEK STATUS
+===================================================== */
+
+function checkStudentStatus(){
+
+  const keyword =
+    document
+      .getElementById(
+        'statusNomorPendaftaran'
+      )
+      .value
+      .trim();
+
+
+  const result =
+    document.getElementById(
+      'statusResult'
+    );
+
+
+  const loading =
+    document.getElementById(
+      'statusLoading'
+    );
+
+
+  if(!keyword){
+
+    result.innerHTML=`
+
+      <div class="alert alert-warning">
+
+        Masukkan Nomor Pendaftaran atau NPM/NIM terlebih dahulu.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  result.innerHTML='';
+
+  loading.style.display='block';
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(data){
+
+        loading.style.display='none';
+
+
+        if(!data){
+
+          result.innerHTML=`
+
+            <div class="error-box">
+
+              Data pendaftaran dengan Nomor Pendaftaran atau NPM/NIM
+
+              <b>
+                ${escapeHtml(keyword)}
+              </b>
+
+              tidak ditemukan.
+
+            </div>
+
+          `;
+
+          return;
+
+        }
+
+
+        renderStatus(data);
+
+      }
+    )
+
+
+    .withFailureHandler(
+      function(error){
+
+        loading.style.display='none';
+
+
+        result.innerHTML=`
+
+          <div class="error-box">
+
+            ${
+              escapeHtml(
+                error.message
+              )
+            }
+
+          </div>
+
+        `;
+
+      }
+    )
+
+
+    .checkStatus(keyword);
+
+}
+
+
+/* =====================================================
+   HASIL STATUS
+   FOTO + NAMA + NIM + STATUS
+===================================================== */
+
+function renderStatus(data){
+
+  const result =
+    document.getElementById(
+      'statusResult'
+    );
+
+
+  let photo='';
+
+
+  if(data.fotoUrl){
+
+    photo=`
+
+      <img
+
+        src="${data.fotoUrl}"
+
+        class="student-photo"
+
+        alt="Foto ${escapeHtml(data.nama)}"
+
+        onerror="photoError(this)">
+
+    `;
+
+  }
+
+  else{
+
+    photo=`
+
+      <div class="photo-placeholder">
+
+        Foto tidak tersedia
+
+      </div>
+
+    `;
+
+  }
+
+
+  result.innerHTML=`
+
+  <div class="status-card">
+
+
+    <!-- =========================================
+         HEADER STATUS
+    ========================================== -->
+
+    <div class="status-profile">
+
+
+      <div class="photo-wrap">
+
+        ${photo}
+
+      </div>
+
+
+      <div class="profile-info">
+
+
+        <div class="profile-name">
+
+          ${escapeHtml(data.nama)}
+
+        </div>
+
+
+        <div class="profile-nim">
+
+          NIM:
+          <b>
+            ${escapeHtml(data.nim)}
+          </b>
+
+        </div>
+
+
+        <div class="profile-prodi">
+
+          ${escapeHtml(data.prodi)}
+
+        </div>
+
+
+        <span
+          class="status-badge
+          ${statusClass(data.status)}">
+
+          ${escapeHtml(
+            data.status ||
+            'Diajukan'
+          )}
+
+        </span>
+
+
+      </div>
+
+
+    </div>
+
+
+    <!-- =========================================
+         AKADEMIK
+    ========================================== -->
+
+    <div class="status-body">
+
+
+      <div class="result-grid">
+
+
+        <div class="result-box">
+
+          <span>
+            IPK
+          </span>
+
+          <strong>
+
+            ${
+              data.ipk !== ''
+              ? Number(data.ipk)
+                  .toFixed(2)
+              : '-'
+            }
+
+          </strong>
+
+        </div>
+
+
+        <div class="result-box">
+
+          <span>
+            Predikat
+          </span>
+
+          <strong
+            style="font-size:14px;">
+
+            ${
+              escapeHtml(
+                data.predikat || '-'
+              )
+            }
+
+          </strong>
+
+        </div>
+
+
+        <div class="result-box">
+
+          <span>
+            Lama Studi
+          </span>
+
+          <strong>
+
+            ${
+              data.lamaStudi !== ''
+              ? data.lamaStudi +
+                ' tahun'
+              : '-'
+            }
+
+          </strong>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- DETAIL -->
+
+      <div
+        class="card-title"
+        style="margin-bottom:15px;">
+
+        Detail Mahasiswa
+
+      </div>
+
+
+      <div class="detail-grid">
+
+
+        ${detail(
+          'Nomor Pendaftaran',
+          data.nomorPendaftaran
+        )}
+
+
+        ${detail(
+          'NIM',
+          data.nim
+        )}
+
+
+        ${detail(
+          'Nama Lengkap',
+          data.nama
+        )}
+
+
+        ${detail(
+          'Program Studi',
+          data.prodi
+        )}
+
+
+        ${detail(
+          'Tempat Lahir',
+          data.tempatLahir
+        )}
+
+
+        ${detail(
+          'Tanggal Lahir',
+          data.tanggalLahir
+        )}
+
+
+        ${detail(
+          'Jenis Kelamin',
+          data.jenisKelamin
+        )}
+
+
+        ${detail(
+          'Tahun Masuk',
+          data.tahunMasuk
+        )}
+
+
+        ${detail(
+          'Tahun Lulus',
+          data.tahunLulus
+        )}
+
+
+        ${detail(
+          'No. HP',
+          data.noHp
+        )}
+
+
+        ${detail(
+          'Email',
+          data.email
+        )}
+
+
+      </div>
+
+
+      <br>
+
+
+      <!-- JUDUL SKRIPSI -->
+
+      <div
+        class="card-title"
+        style="margin-bottom:10px;">
+
+        Judul Skripsi
+
+      </div>
+
+
+      <div class="alert alert-info">
+
+        ${
+          escapeHtml(
+            data.judulSkripsi ||
+            '-'
+          )
+        }
+
+      </div>
+
+
+      <!-- CATATAN -->
+
+      ${
+        data.catatan
+        ?
+
+        `
+
+        <div class="alert alert-warning">
+
+          <b>
+            Catatan Admin
+          </b>
+
+          <br><br>
+
+          ${
+            escapeHtml(
+              data.catatan
+            )
+          }
+
+        </div>
+
+        `
+
+        : ''
+
+      }
+
+
+      ${
+        data.waktuVerifikasi
+
+        ?
+
+        `
+
+        <div
+          style="
+            font-size:11px;
+            color:#9ca3af;
+          ">
+
+          Terakhir diperbarui:
+          ${
+            escapeHtml(
+              data.waktuVerifikasi
+            )
+          }
+
+        </div>
+
+        `
+
+        : ''
+
+      }
+
+
+    </div>
+
+
+  </div>
+
+  `;
+
+}
+
+
+function detail(label,value){
+
+  return `
+
+    <div class="detail-row">
+
+      <div class="detail-label">
+
+        ${escapeHtml(label)}
+
+      </div>
+
+
+      <div class="detail-value">
+
+        ${
+          escapeHtml(
+            value || '-'
+          )
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function statusClass(status){
+
+  if(status==='Diverifikasi'){
+
+    return 'badge-diverifikasi';
+
+  }
+
+
+  if(status==='Perlu Perbaikan'){
+
+    return 'badge-perbaikan';
+
+  }
+
+
+  if(status==='Ditolak'){
+
+    return 'badge-ditolak';
+
+  }
+
+
+  return 'badge-diajukan';
+
+}
+
+
+function photoError(img){
+
+  img.style.display='none';
+
+
+  const div =
+    document.createElement('div');
+
+
+  div.className=
+    'photo-placeholder';
+
+
+  div.innerHTML=
+    'Foto tidak dapat ditampilkan';
+
+
+  img.parentNode
+    .appendChild(div);
+
+}
+
+
+/* =====================================================
+   DOWNLOAD
+===================================================== */
+
+function loadDownloads(){
+
+  const container = document.getElementById('downloadList');
+  const prodi = document.getElementById('downloadProdi').value;
+
+  if(!prodi){
+    container.innerHTML = `
+      <div class="alert alert-info" style="grid-column:1/-1;">
+        Silakan pilih Program Studi terlebih dahulu.
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="loading" style="display:block;grid-column:1/-1;">
+      Memuat persyaratan ${escapeHtml(prodi)}...
+    </div>`;
+
+  google.script.run
+    .withSuccessHandler(function(items){
+
+      container.innerHTML='';
+
+      if(!items || !items.length){
+        container.innerHTML=`
+          <div class="alert alert-info" style="grid-column:1/-1;">
+            Belum ada dokumen untuk ${escapeHtml(prodi)}.
+          </div>`;
+        return;
+      }
+
+      items.forEach(function(item){
+        const div=document.createElement('div');
+        div.className='download-card';
+        div.innerHTML=`
+          <div class="download-icon">📄</div>
+          <div style="flex:1;">
+            <div class="download-title">${escapeHtml(item.title)}</div>
+            <div class="download-desc">${escapeHtml(item.description)}</div>
+            ${item.url ? `
+              <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener" class="btn btn-primary" style="display:inline-block;text-decoration:none;">
+                ⬇️ Download
+              </a>` : `
+              <button class="btn btn-light" disabled>
+                Belum tersedia
+              </button>`}
+          </div>`;
+        container.appendChild(div);
+      });
+    })
+    .withFailureHandler(function(error){
+      container.innerHTML=`<div class="error-box" style="grid-column:1/-1;">${escapeHtml(error.message)}</div>`;
+    })
+    .getDownloadRequirements(prodi);
+}
+
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+let currentAdminUsername='';
+let currentAdminPassword='';
+let currentAdminName='';
+
+
+function toggleAdminPassword(){
+  const input = document.getElementById('adminPassword');
+  const button = document.getElementById('adminPasswordToggle');
+  if(!input) return;
+
+  if(input.type === 'password'){
+    input.type = 'text';
+    if(button){
+      button.textContent = '🙈';
+      button.title = 'Sembunyikan password';
+    }
+  } else {
+    input.type = 'password';
+    if(button){
+      button.textContent = '👁️';
+      button.title = 'Lihat password';
+    }
+  }
+}
+
+
+function adminLogin(){
+
+  const username =
+    document
+      .getElementById('adminUsername')
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById('adminPassword')
+      .value;
+
+  if(!username){
+    alert('Masukkan username admin.');
+    document.getElementById('adminUsername').focus();
+    return;
+  }
+
+  if(!password){
+    alert('Masukkan password admin.');
+    document.getElementById('adminPassword').focus();
+    return;
+  }
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(user){
+
+        if(!user){
+          alert('Username atau password admin salah.');
+          return;
+        }
+
+        currentAdminUsername = username;
+        currentAdminPassword = password;
+        currentAdminName = user.nama || username;
+
+        document
+          .getElementById('adminLoginBox')
+          .style.display='none';
+
+        document
+          .getElementById('adminDashboard')
+          .style.display='block';
+
+        const adminWelcome = document.getElementById('adminWelcome');
+        if(adminWelcome){
+          adminWelcome.textContent =
+            'Login sebagai: ' + currentAdminName +
+            ' (' + (user.level || 'Admin') + ')';
+        }
+
+        if ((user.level || '').toLowerCase() === 'admin') {
+          document.getElementById('tabUsers').style.display = 'inline-block';
+        } else {
+          document.getElementById('tabUsers').style.display = 'none';
+        }
+
+        showAdminSection('verification');
+        loadAdminData();
+
+        if ((user.level || '').toLowerCase() === 'admin') {
+          loadAdminUsers();
+        }
+
+      }
+    )
+
+    .withFailureHandler(
+      function(error){
+        alert(error.message);
+      }
+    )
+
+    .adminLogin(username, password);
+}
+
+
+
+function adminLogout(){
+  currentAdminUsername = '';
+  currentAdminPassword = '';
+  currentAdminName = '';
+
+  const loginBox = document.getElementById('adminLoginBox');
+  const dashboard = document.getElementById('adminDashboard');
+  const username = document.getElementById('adminUsername');
+  const password = document.getElementById('adminPassword');
+
+  if(loginBox) loginBox.style.display = 'block';
+  if(dashboard) dashboard.style.display = 'none';
+  if(username) username.value = '';
+  if(password){
+    password.value = '';
+    password.type = 'password';
+  }
+  const passwordToggle = document.getElementById('adminPasswordToggle');
+  if(passwordToggle){
+    passwordToggle.textContent = '👁️';
+    passwordToggle.title = 'Lihat password';
+  }
+
+  showAdminSection('verification');
+  alert('Anda telah logout.');
+}
+
+
+function showAdminSection(section){
+  const verification = document.getElementById('adminSectionVerification');
+  const valid = document.getElementById('adminSectionValid');
+  const users = document.getElementById('adminSectionUsers');
+  const tabVerification = document.getElementById('tabVerification');
+  const tabValid = document.getElementById('tabValid');
+  const tabUsers = document.getElementById('tabUsers');
+
+  if (verification) verification.style.display = section === 'verification' ? 'block' : 'none';
+  if (valid) valid.style.display = section === 'valid' ? 'block' : 'none';
+  if (users) users.style.display = section === 'users' ? 'block' : 'none';
+
+  if (tabVerification) tabVerification.className = section === 'verification' ? 'btn btn-primary' : 'btn btn-light';
+  if (tabValid) tabValid.className = section === 'valid' ? 'btn btn-primary' : 'btn btn-light';
+  if (tabUsers) tabUsers.className = section === 'users' ? 'btn btn-primary' : 'btn btn-light';
+
+  if (section === 'valid' && currentAdminUsername && currentAdminPassword) {
+    loadVerifiedData();
+  }
+
+  if (section === 'users' && currentAdminUsername && currentAdminPassword) {
+    loadAdminUsers();
+  }
+}
+
+let verifiedDataCache = [];
+
+function loadVerifiedData(){
+  const tbody = document.getElementById('validTableBody');
+  if(!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:28px;">⏳ Memuat data valid...</td></tr>';
+
+  google.script.run
+    .withSuccessHandler(function(data){
+      verifiedDataCache = Array.isArray(data) ? data : [];
+      const filter = document.getElementById('validProdiFilter');
+      if(filter){
+        const current = filter.value;
+        const prodis = [...new Set(verifiedDataCache.map(function(x){return String(x.prodi||'').trim();}).filter(Boolean))].sort();
+        filter.innerHTML = '<option value="">Semua Program Studi</option>' + prodis.map(function(p){ return '<option value="'+escapeHtml(p)+'">'+escapeHtml(p)+'</option>'; }).join('');
+        if(prodis.indexOf(current) !== -1) filter.value = current;
+      }
+      renderVerifiedTable();
+    })
+    .withFailureHandler(function(error){
+      verifiedDataCache = [];
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:28px;color:#dc2626;">❌ '+escapeHtml(error.message || 'Gagal mengambil data valid.')+'</td></tr>';
+    })
+    .getVerifiedRegistrations(currentAdminUsername, currentAdminPassword);
+}
+
+function renderVerifiedTable(){
+  const tbody = document.getElementById('validTableBody');
+  if(!tbody) return;
+  const search = String((document.getElementById('validSearch')||{}).value || '').trim().toLowerCase();
+  const prodi = String((document.getElementById('validProdiFilter')||{}).value || '').trim().toLowerCase();
+
+  const filtered = verifiedDataCache.filter(function(row){
+    const hay = [row.nomorPendaftaran,row.nim,row.nama,row.prodi,row.tahunLulus,row.judulSkripsi].join(' ').toLowerCase();
+    return (!search || hay.indexOf(search) !== -1) && (!prodi || String(row.prodi||'').toLowerCase() === prodi);
+  });
+
+  const summary = document.getElementById('validSummary');
+  if(summary) summary.textContent = 'Menampilkan ' + filtered.length + ' dari ' + verifiedDataCache.length + ' pendaftaran yang sudah diverifikasi.';
+
+  tbody.innerHTML = '';
+  if(!filtered.length){
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:30px;">Belum ada data valid yang sesuai.</td></tr>';
+    return;
+  }
+
+  filtered.forEach(function(row,index){
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${index+1}</td>
+      <td><b>${escapeHtml(row.nama||'-')}</b></td>
+      <td>${escapeHtml(row.nim||'-')}</td>
+      <td>${escapeHtml(row.prodi||'-')}</td>
+      <td>${escapeHtml(row.jenjang||'-')}</td>
+      <td>${row.ipk !== '' && row.ipk != null ? Number(row.ipk).toFixed(2) : '-'}</td>
+      <td>${escapeHtml(row.predikat||'-')}</td>
+      <td>${escapeHtml(row.gelarAkademik||'-')}</td>
+      <td><span style="font-weight:700;color:#15803d;">${escapeHtml(row.alumni||'Ya')}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function exportVerifiedExcel(){
+  const search = String((document.getElementById('validSearch')||{}).value || '').trim();
+  const prodi = String((document.getElementById('validProdiFilter')||{}).value || '').trim();
+
+  if(!verifiedDataCache.length){
+    alert('Tidak ada data valid yang dapat diekspor.');
+    return;
+  }
+
+  const btn = Array.from(document.querySelectorAll('#adminSectionValid button'))
+    .find(function(el){ return String(el.textContent||'').indexOf('Export Excel') !== -1; });
+
+  const oldText = btn ? btn.innerHTML : '';
+  if(btn){
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Menyiapkan Excel...';
+  }
+
+  google.script.run
+    .withSuccessHandler(function(result){
+      if(btn){
+        btn.disabled = false;
+        btn.innerHTML = oldText;
+      }
+
+      if(!result || !result.base64){
+        alert('Gagal membuat file Excel.');
+        return;
+      }
+
+      try{
+        const binary = atob(result.base64);
+        const bytes = new Uint8Array(binary.length);
+        for(let i=0;i<binary.length;i++) bytes[i] = binary.charCodeAt(i);
+
+        const blob = new Blob([bytes], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = result.filename || ('Data_Alumni_Valid_'+new Date().toISOString().slice(0,10)+'.xlsx');
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+      }catch(err){
+        console.error(err);
+        alert('File Excel berhasil dibuat tetapi gagal diunduh.');
+      }
+    })
+    .withFailureHandler(function(error){
+      if(btn){
+        btn.disabled = false;
+        btn.innerHTML = oldText;
+      }
+      alert('Gagal membuat Excel: ' + (error && error.message ? error.message : error));
+    })
+    .exportVerifiedRegistrationsExcel(currentAdminUsername, currentAdminPassword, search, prodi);
+}
+
+
+
+function showAdminUserMessage(message, type){
+  const box=document.getElementById('adminUserMessage');
+  if(!box)return;
+  const cls=type==='success'?'alert alert-success':'alert alert-warning';
+  box.innerHTML='<div class="'+cls+'">'+escapeHtml(message)+'</div>';
+}
+
+function toggleNewAdminPassword(){
+  const input=document.getElementById('newAdminPassword');
+  const button=document.getElementById('newAdminPasswordToggle');
+  if(!input)return;
+  if(input.type==='password'){
+    input.type='text';
+    if(button){button.textContent='🙈';button.title='Sembunyikan password';}
+  }else{
+    input.type='password';
+    if(button){button.textContent='👁️';button.title='Lihat password';}
+  }
+}
+
+let editingAdminUserRow = null;
+
+function startEditAdminUser(user){
+  editingAdminUserRow = Number(user.rowNumber);
+  const username=document.getElementById('newAdminUsername');
+  const password=document.getElementById('newAdminPassword');
+  const nama=document.getElementById('newAdminNama');
+  const level=document.getElementById('newAdminLevel');
+  const status=document.getElementById('newAdminStatus');
+  if(username) {
+    username.value=user.username || '';
+    username.disabled = String(user.username || '').toLowerCase() === String(currentAdminUsername || '').toLowerCase();
+    username.title = username.disabled ? 'Username akun yang sedang digunakan tidak dapat diubah.' : '';
+  }
+  if(password) { password.value=''; password.placeholder='Kosongkan jika password tidak diubah'; }
+  if(nama) nama.value=user.nama || '';
+  if(level) level.value=user.level || 'Operator';
+  if(status) status.value=user.status || 'Aktif';
+  const saveBtn=document.querySelector('#adminSectionUsers button[onclick="addAdminUser()"]');
+  if(saveBtn){ saveBtn.innerHTML='💾 Update User'; }
+  showAdminUserMessage('Mode edit aktif untuk user "'+(user.username || '')+'".','success');
+  const form=document.getElementById('newAdminUsername');
+  if(form) form.focus();
+}
+
+function resetAdminUserForm(){
+  editingAdminUserRow = null;
+  ['newAdminUsername','newAdminPassword','newAdminNama'].forEach(function(id){const el=document.getElementById(id);if(el){el.value='';el.disabled=false;el.title='';}});
+  const pw=document.getElementById('newAdminPassword'); if(pw){pw.type='password';pw.placeholder='Minimal 6 karakter';}
+  const pwt=document.getElementById('newAdminPasswordToggle'); if(pwt){pwt.textContent='👁️';pwt.title='Lihat password';}
+  const level=document.getElementById('newAdminLevel'); if(level)level.value='Operator';
+  const status=document.getElementById('newAdminStatus'); if(status)status.value='Aktif';
+  const saveBtn=document.querySelector('#adminSectionUsers button[onclick="addAdminUser()"]'); if(saveBtn)saveBtn.innerHTML='➕ Simpan User';
+  const box=document.getElementById('adminUserMessage'); if(box)box.innerHTML='';
+}
+
+function addAdminUser(){
+  const username=document.getElementById('newAdminUsername').value.trim();
+  const password=document.getElementById('newAdminPassword').value;
+  const nama=document.getElementById('newAdminNama').value.trim();
+  const level=document.getElementById('newAdminLevel').value;
+  const status=document.getElementById('newAdminStatus').value;
+  const isEdit = editingAdminUserRow !== null;
+
+  if(!username){showAdminUserMessage('Username wajib diisi.','warning');return;}
+  if(!isEdit && !password){showAdminUserMessage('Password wajib diisi.','warning');return;}
+  if(password.length>0 && password.length<6){showAdminUserMessage('Password minimal 6 karakter.','warning');return;}
+  if(!nama){showAdminUserMessage('Nama user wajib diisi.','warning');return;}
+
+  showAdminUserMessage(isEdit ? 'Memperbarui user...' : 'Menyimpan user...','success');
+
+  const success=function(result){
+    const editedCurrentUser = isEdit && String(result.username || '').toLowerCase() === String(currentAdminUsername || '').toLowerCase();
+    if(editedCurrentUser && password) currentAdminPassword = password;
+    resetAdminUserForm();
+    showAdminUserMessage(isEdit ? 'User "'+result.username+'" berhasil diperbarui.' : 'User "'+result.username+'" berhasil ditambahkan.','success');
+    loadAdminUsers();
+  };
+  const failure=function(error){
+    showAdminUserMessage(error.message||'Gagal menyimpan user.','warning');
+  };
+
+  if(isEdit){
+    google.script.run.withSuccessHandler(success).withFailureHandler(failure)
+      .updateAdminUser(editingAdminUserRow,username,password,nama,level,status,currentAdminUsername,currentAdminPassword);
+  }else{
+    google.script.run.withSuccessHandler(success).withFailureHandler(failure)
+      .addAdminUser(username,password,nama,level,status,currentAdminUsername,currentAdminPassword);
+  }
+}
+
+function loadAdminUsers(){
+  const tbody=document.getElementById('adminUserTableBody');
+  if(!tbody)return;
+  tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;">Memuat user...</td></tr>';
+  google.script.run.withSuccessHandler(function(users){
+    tbody.innerHTML='';
+    if(!users||!users.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;">Belum ada user.</td></tr>';return;}
+    users.forEach(function(user,index){
+      const tr=document.createElement('tr');
+
+      const tdNo=document.createElement('td');
+      tdNo.textContent=index+1;
+
+      const tdUsername=document.createElement('td');
+      const userBold=document.createElement('b');
+      userBold.textContent=user.username || '';
+      tdUsername.appendChild(userBold);
+
+      const tdPassword=document.createElement('td');
+      const passWrap=document.createElement('div');
+      passWrap.style.cssText='display:flex;align-items:center;gap:6px;min-width:150px;';
+      const passText=document.createElement('span');
+      passText.textContent='••••••••';
+      passText.dataset.visible='0';
+      const passButton=document.createElement('button');
+      passButton.type='button';
+      passButton.className='btn btn-light';
+      passButton.style.cssText='padding:5px 9px;';
+      passButton.textContent='👁️';
+      passButton.title='Lihat password';
+      passButton.onclick=function(){
+        if(passText.dataset.visible==='1'){
+          passText.textContent='••••••••';
+          passText.dataset.visible='0';
+          passButton.textContent='👁️';
+          passButton.title='Lihat password';
+        }else{
+          passText.textContent=user.password || '';
+          passText.dataset.visible='1';
+          passButton.textContent='🙈';
+          passButton.title='Sembunyikan password';
+        }
+      };
+      passWrap.appendChild(passText);
+      passWrap.appendChild(passButton);
+      tdPassword.appendChild(passWrap);
+
+      const tdNama=document.createElement('td');
+      tdNama.textContent=user.nama || '';
+      const tdLevel=document.createElement('td');
+      tdLevel.textContent=user.level || '';
+      const tdStatus=document.createElement('td');
+      const badge=document.createElement('span');
+      badge.className='status-badge '+(user.status==='Aktif'?'badge-diverifikasi':'badge-ditolak');
+      badge.textContent=user.status || '';
+      tdStatus.appendChild(badge);
+
+      const tdAction=document.createElement('td');
+      const editButton=document.createElement('button');
+      editButton.type='button';
+      editButton.className='btn btn-light';
+      editButton.style.cssText='padding:6px 10px;white-space:nowrap;';
+      editButton.textContent='✏️ Edit';
+      editButton.title='Edit user';
+      editButton.onclick=function(){ startEditAdminUser(user); };
+      tdAction.appendChild(editButton);
+
+      tr.appendChild(tdNo);
+      tr.appendChild(tdUsername);
+      tr.appendChild(tdPassword);
+      tr.appendChild(tdNama);
+      tr.appendChild(tdLevel);
+      tr.appendChild(tdStatus);
+      tr.appendChild(tdAction);
+      tbody.appendChild(tr);
+    });
+  }).withFailureHandler(function(error){
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;">'+escapeHtml(error.message)+'</td></tr>';
+  }).getAdminUsers(currentAdminUsername,currentAdminPassword);
+}
+
+
+function loadAdminData(){
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(data){
+
+        const tbody =
+          document.getElementById(
+            'adminTableBody'
+          );
+
+
+        tbody.innerHTML='';
+
+
+        if(!data.length){
+
+          tbody.innerHTML=`
+
+            <tr>
+
+              <td
+                colspan="10"
+                style="
+                  text-align:center;
+                  padding:30px;
+                ">
+
+                Belum ada pendaftaran.
+
+              </td>
+
+            </tr>
+
+          `;
+
+          return;
+
+        }
+
+
+        data.forEach(
+          function(row){
+
+            const tr =
+              document.createElement(
+                'tr'
+              );
+
+
+            tr.innerHTML=`
+
+              <td>
+                ${row.rowNumber}
+              </td>
+
+
+              <td>
+
+                <b>
+                  ${
+                    escapeHtml(
+                      row.nomorPendaftaran
+                    )
+                  }
+                </b>
+
+                <br>
+
+                ${
+                  escapeHtml(
+                    row.timestamp
+                  )
+                }
+
+              </td>
+
+
+              <td>
+
+                <b>
+                  ${
+                    escapeHtml(
+                      row.nama
+                    )
+                  }
+                </b>
+
+                <br>
+
+                NIM:
+                ${
+                  escapeHtml(
+                    row.nim
+                  )
+                }
+
+              </td>
+
+
+              <td>
+                ${
+                  escapeHtml(
+                    row.prodi
+                  )
+                }
+              </td>
+
+
+              <td>
+
+                ${
+                  row.ipk !== ''
+                  ? Number(row.ipk)
+                      .toFixed(2)
+                  : '-'
+                }
+
+              </td>
+
+
+              <td>
+
+                ${
+                  escapeHtml(
+                    row.predikat || '-'
+                  )
+                }
+
+              </td>
+
+
+              <td>
+
+                ${
+                  row.lamaStudi !== ''
+                  ? row.lamaStudi +
+                    ' tahun'
+                  : '-'
+                }
+
+              </td>
+
+
+              <td>
+
+                <span
+                  class="
+                    status-badge
+                    ${statusClass(row.status)}
+                  ">
+
+                  ${
+                    escapeHtml(
+                      row.status
+                    )
+                  }
+
+                </span>
+
+              </td>
+
+
+              <td
+                class="file-links">
+
+                ${
+                  fileLink(
+                    'Naskah Skripsi',
+                    row.naskahSkripsi
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Naskah Publikasi',
+                    row.naskahPublikasi
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Cover / Judul Skripsi',
+                    row.coverJudul
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'KRS Semester 1 s/d Semester Akhir',
+                    row.krs
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'KHS Semester 1 s/d Semester Akhir',
+                    row.khs
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Transkrip Nilai Sementara',
+                    row.transkrip
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Lembar Halaman Pengesahan Skripsi',
+                    row.pengesahanSkripsi
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Lembar Persetujuan Skripsi',
+                    row.persetujuanSkripsi
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Lembar Pengesahan Naskah Publikasi',
+                    row.pengesahanPublikasi
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Lembar Distribusi Naskah Publikasi',
+                    row.distribusiPublikasi
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Lembar Distribusi Skripsi',
+                    row.distribusiSkripsi
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Lembar Konsultasi Bimbingan Skripsi',
+                    row.konsultasiSkripsi
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Surat Bebas Akademik',
+                    row.bebasAkademik
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Surat Keterangan Bebas Tanggungan',
+                    row.bebasTanggungan
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Surat Keterangan Bebas Perpustakaan',
+                    row.bebasPerpustakaan
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Surat Keterangan Telah Mendaftar Yudisium',
+                    row.telahDaftarYudisium
+                  )
+                }
+
+                ${
+                  fileLink(
+                    'Pas Foto Berwarna 4 x 6',
+                    row.pasFoto46
+                  )
+                }
+
+              </td>
+
+
+              <td>
+
+                <button
+                  class="btn btn-primary"
+                  onclick='openVerify(
+                    ${JSON.stringify(row)}
+                  )'>
+
+                  Verifikasi
+
+                </button>
+
+              </td>
+
+            `;
+
+
+            tbody.appendChild(tr);
+
+          }
+        );
+
+      }
+    )
+
+
+    .withFailureHandler(
+      function(error){
+
+        alert(error.message);
+
+      }
+    )
+
+
+    .getAllRegistrations(
+      currentAdminUsername,
+      currentAdminPassword
+    );
+
+}
+
+
+function fileLink(label,url){
+
+  if(!url){
+
+    return '';
+
+  }
+
+
+  return `
+
+    <a
+      href="${url}"
+      target="_blank">
+
+      ${label}
+
+    </a>
+
+  `;
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function openVerify(row){
+
+  document
+    .getElementById(
+      'verifyRow'
+    )
+    .value=
+      row.rowNumber;
+
+
+  document
+    .getElementById(
+      'verifyStatus'
+    )
+    .value=
+      row.status ||
+      'Diajukan';
+
+
+  document
+    .getElementById(
+      'verifyNote'
+    )
+    .value=
+      row.catatan ||
+      '';
+
+
+  document
+    .getElementById(
+      'verifyModal'
+    )
+    .style.display='block';
+
+}
+
+
+function closeModal(){
+
+  document
+    .getElementById(
+      'verifyModal'
+    )
+    .style.display='none';
+
+}
+
+
+function saveVerification(){
+
+  const row =
+    Number(
+      document
+        .getElementById(
+          'verifyRow'
+        )
+        .value
+    );
+
+
+  const status =
+    document
+      .getElementById(
+        'verifyStatus'
+      )
+      .value;
+
+
+  const note =
+    document
+      .getElementById(
+        'verifyNote'
+      )
+      .value;
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(){
+
+        alert(
+          'Verifikasi berhasil disimpan.'
+        );
+
+
+        closeModal();
+
+        loadAdminData();
+
+      }
+    )
+
+
+    .withFailureHandler(
+      function(error){
+
+        alert(error.message);
+
+      }
+    )
+
+
+    .verifyRegistration(
+      currentAdminUsername,
+      currentAdminPassword,
+      row,
+      status,
+      note
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function escapeHtml(value){
+
+  if(
+    value===null ||
+    value===undefined
+  ){
+
+    return '';
+
+  }
+
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+
+    .replace(
+      /</g,
+      '&lt;'
+    )
+
+    .replace(
+      />/g,
+      '&gt;'
+    )
+
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+
+    .replace(
+      /'/g,
+      '&#039;'
+    );
+
+}
+
+
+/* =====================================================
+   INIT
+===================================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function(){
+
+    renderFileFields();
+
+    updateCalculation();
+
+    loadTracerDashboard();
+
+  }
+);
+
+
+window.onclick=function(event){
+
+  const modal =
+    document.getElementById(
+      'verifyModal'
+    );
+
+
+  if(
+    event.target===modal
+  ){
+
+    closeModal();
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>
